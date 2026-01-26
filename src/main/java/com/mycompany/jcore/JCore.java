@@ -1,0 +1,40 @@
+package com.mycompany.jcore;
+
+import com.mycompany.jcore.controller.ChannelController;
+import com.mycompany.jcore.controller.PersonController;
+import com.mycompany.jcore.entities.Person;
+import com.mycompany.jcore.repositories.ChannelRepository;
+import com.mycompany.jcore.repositories.MessageRepository;
+import com.mycompany.jcore.repositories.PersonRepository;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.Statement;
+import vendor.ControllerComponent.Connection.Server;
+import vendor.DI.ConfigDI;
+import vendor.DI.ContainerDI;
+
+/**
+ *
+ * @author maxim
+ */
+public class JCore {
+
+    public static void main(String[] args) throws SQLException, IllegalArgumentException, IllegalAccessException, IOException, Exception {
+        //инициализация бинов в контейнере
+        ConfigDI.setBeans();
+        
+        // создаем схемы таблицам БД, вызывая методы init() на бинах репозиториев сущностей
+        ContainerDI.getBean(ChannelRepository.class).init();
+        ContainerDI.getBean(PersonRepository.class).init();
+        ContainerDI.getBean(MessageRepository.class).init();
+        
+        //запуск сервера
+        Server server = ContainerDI.getBean(Server.class); //берем бин сервера из DI-контейнера
+        
+        // регестрируем все наши контроллеры на сервере (для роутинга)
+        //server.controllerPull.declaredControllers.add(new PersonController(ContainerDI.getBean(Statement.class)));
+        server.controllerPull.declaredControllers.add(ContainerDI.getBean(ChannelController.class));
+        
+        server.startServer(); //запускаем сервер
+    }
+}
