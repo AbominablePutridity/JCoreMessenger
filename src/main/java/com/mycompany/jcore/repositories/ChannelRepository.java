@@ -1,6 +1,9 @@
 package com.mycompany.jcore.repositories;
 
+import vendor.EntityOrm.Repository;
 import com.mycompany.jcore.entities.Channel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import vendor.EntityOrm.Entity;
 
 /**
@@ -13,4 +16,17 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         super(entityClass);
     }
     
+    public ResultSet getAllGroupsByPersonLoginWithPagination(String loginPerson, int page, int size) throws SQLException
+    {
+        ResultSet data = super.getEntity().getData(
+                "channel.id, channel.name", 
+                "INNER JOIN personchannel pc ON channel.id = pc.channelid " +
+                "INNER JOIN person p ON pc.personid = p.id " +
+                "WHERE p.login = '" + loginPerson + "' " + 
+                "LIMIT " + size + " OFFSET " + (page * size));
+            
+        Entity.printResultSetSimple(data);
+        
+        return data;
+    }
 }

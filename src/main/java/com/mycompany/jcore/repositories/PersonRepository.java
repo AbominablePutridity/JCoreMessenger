@@ -1,5 +1,6 @@
 package com.mycompany.jcore.repositories;
 
+import vendor.EntityOrm.Repository;
 import com.mycompany.jcore.entities.Person;
 import vendor.EntityOrm.Entity;
 

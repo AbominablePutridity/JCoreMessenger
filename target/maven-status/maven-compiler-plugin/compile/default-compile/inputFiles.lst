@@ -3,9 +3,11 @@ D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\controller\PersonCont
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\entities\Channel.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\entities\Message.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\entities\Person.java
+D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\entities\PersonChannel.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\JCore.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\ChannelRepository.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\MessageRepository.java
+D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\PersonChannelRepository.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\PersonRepository.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\Repository.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\service\ChannelService.java

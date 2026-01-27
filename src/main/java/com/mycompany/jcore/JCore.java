@@ -1,14 +1,12 @@
 package com.mycompany.jcore;
 
 import com.mycompany.jcore.controller.ChannelController;
-import com.mycompany.jcore.controller.PersonController;
-import com.mycompany.jcore.entities.Person;
 import com.mycompany.jcore.repositories.ChannelRepository;
 import com.mycompany.jcore.repositories.MessageRepository;
+import com.mycompany.jcore.repositories.PersonChannelRepository;
 import com.mycompany.jcore.repositories.PersonRepository;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Statement;
 import vendor.ControllerComponent.Connection.Server;
 import vendor.DI.ConfigDI;
 import vendor.DI.ContainerDI;
@@ -26,7 +24,11 @@ public class JCore {
         // создаем схемы таблицам БД, вызывая методы init() на бинах репозиториев сущностей
         ContainerDI.getBean(ChannelRepository.class).init();
         ContainerDI.getBean(PersonRepository.class).init();
+        ContainerDI.getBean(PersonChannelRepository.class).init();
         ContainerDI.getBean(MessageRepository.class).init();
+        
+        ContainerDI.getBean(ChannelRepository.class)
+                .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20);
         
         //запуск сервера
         Server server = ContainerDI.getBean(Server.class); //берем бин сервера из DI-контейнера

@@ -1,12 +1,15 @@
-vendor\EntityOrm\Entity.class
-vendor\JCoreMeta.class
-com\mycompany\jcore\repositories\MessageRepository.class
+com\mycompany\jcore\repositories\PersonChannelRepository.class
 vendor\EntityOrm\EntityInfo.class
 vendor\DI\ConfigDI.class
 vendor\EntityOrm\ConfigJDBC.class
-com\mycompany\jcore\entities\Message.class
-vendor\EntityOrm\FieldNameWithType.class
 com\mycompany\jcore\service\PersonService.class
+com\mycompany\jcore\entities\Channel.class
+vendor\EntityOrm\Entity.class
+vendor\JCoreMeta.class
+com\mycompany\jcore\repositories\MessageRepository.class
+com\mycompany\jcore\entities\Message.class
+com\mycompany\jcore\entities\PersonChannel.class
+vendor\EntityOrm\FieldNameWithType.class
 com\mycompany\jcore\controller\PersonController.class
 com\mycompany\jcore\repositories\PersonRepository.class
 com\mycompany\jcore\service\ChannelService.class
@@ -18,6 +21,5 @@ com\mycompany\jcore\repositories\Repository.class
 vendor\ControllerComponent\Controller.class
 com\mycompany\jcore\JCore.class
 com\mycompany\jcore\controller\ChannelController.class
-com\mycompany\jcore\entities\Channel.class
 vendor\DI\ContainerDI.class
 vendor\ControllerComponent\Connection\Server.class

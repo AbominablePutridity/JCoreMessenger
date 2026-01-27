@@ -15,12 +15,8 @@ public class Person extends Entity {
     public String password;
     public String role;
     public String identityCode;
-    
-    public Long channelId;
 
     public Person(Statement statement) {
         super(statement); // передаем обьект для создания запросов родителю
-        
-        refs.add(new RelationField(Channel.class, channelId));
     }    
 }

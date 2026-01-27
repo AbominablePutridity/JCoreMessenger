@@ -4,10 +4,12 @@ import com.mycompany.jcore.controller.ChannelController;
 import com.mycompany.jcore.entities.Channel;
 import com.mycompany.jcore.entities.Message;
 import com.mycompany.jcore.entities.Person;
+import com.mycompany.jcore.entities.PersonChannel;
 import com.mycompany.jcore.repositories.ChannelRepository;
 import com.mycompany.jcore.repositories.MessageRepository;
+import com.mycompany.jcore.repositories.PersonChannelRepository;
 import com.mycompany.jcore.repositories.PersonRepository;
-import com.mycompany.jcore.repositories.Repository;
+import vendor.EntityOrm.Repository;
 import com.mycompany.jcore.service.ChannelService;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -55,11 +57,13 @@ public class ConfigDI {
         //сущности
         ContainerDI.register(Channel.class, new Channel(ContainerDI.getBean(Statement.class)));
         ContainerDI.register(Person.class, new Person(ContainerDI.getBean(Statement.class)));
+        ContainerDI.register(PersonChannel.class, new PersonChannel(ContainerDI.getBean(Statement.class)));
         ContainerDI.register(Message.class, new Message(ContainerDI.getBean(Statement.class)));
         
         //репозитории
         ContainerDI.register(ChannelRepository.class, new ChannelRepository(ContainerDI.getBean(Channel.class)));
         ContainerDI.register(PersonRepository.class, new PersonRepository(ContainerDI.getBean(Person.class)));
+        ContainerDI.register(PersonChannelRepository.class, new PersonChannelRepository(ContainerDI.getBean(PersonChannel.class)));
         ContainerDI.register(MessageRepository.class, new MessageRepository(ContainerDI.getBean(Message.class)));
         
         
