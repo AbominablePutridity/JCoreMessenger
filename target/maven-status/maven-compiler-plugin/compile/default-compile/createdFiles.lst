@@ -7,6 +7,7 @@ com\mycompany\jcore\entities\Channel.class
 vendor\EntityOrm\Entity.class
 vendor\JCoreMeta.class
 com\mycompany\jcore\repositories\MessageRepository.class
+vendor\EntityOrm\Repository.class
 com\mycompany\jcore\entities\Message.class
 com\mycompany\jcore\entities\PersonChannel.class
 vendor\EntityOrm\FieldNameWithType.class
@@ -17,7 +18,6 @@ com\mycompany\jcore\entities\Person.class
 com\mycompany\jcore\repositories\ChannelRepository.class
 vendor\EntityOrm\RelationField.class
 vendor\Security\Security.class
-com\mycompany\jcore\repositories\Repository.class
 vendor\ControllerComponent\Controller.class
 com\mycompany\jcore\JCore.class
 com\mycompany\jcore\controller\ChannelController.class

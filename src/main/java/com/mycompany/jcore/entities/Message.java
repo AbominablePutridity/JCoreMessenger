@@ -13,13 +13,11 @@ public class Message extends Entity {
     public String description;
     public LocalDateTime date;
     
-    public Long channelId;
-    public Long personId;
+    public Long personChannelId;
     
     public Message(Statement statement) {
         super(statement);
         
-        refs.add(new RelationField(Person.class, personId));
-        refs.add(new RelationField(Channel.class, channelId));
+        refs.add(new RelationField(PersonChannel.class, personChannelId));
     }
 }

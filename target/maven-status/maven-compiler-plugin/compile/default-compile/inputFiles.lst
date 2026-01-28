@@ -9,7 +9,6 @@ D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\ChannelR
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\MessageRepository.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\PersonChannelRepository.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\PersonRepository.java
-D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\repositories\Repository.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\service\ChannelService.java
 D:\MyMessengerJava\JCore\src\main\java\com\mycompany\jcore\service\PersonService.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\ControllerComponent\Connection\Server.java
@@ -21,5 +20,6 @@ D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\Entity.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\EntityInfo.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\FieldNameWithType.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\RelationField.java
+D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\Repository.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\JCoreMeta.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\Security\Security.java
