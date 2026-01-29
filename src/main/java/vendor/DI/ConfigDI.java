@@ -12,6 +12,7 @@ import com.mycompany.jcore.repositories.PersonRepository;
 import vendor.EntityOrm.Repository;
 import com.mycompany.jcore.service.ChannelService;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import vendor.ControllerComponent.Connection.Server;

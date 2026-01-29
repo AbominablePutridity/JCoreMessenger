@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import vendor.ControllerComponent.Connection.Server;
 import vendor.DI.ConfigDI;
 import vendor.DI.ContainerDI;
+import vendor.EntityOrm.Entity;
 
 /**
  *
@@ -27,8 +28,17 @@ public class JCore {
         ContainerDI.getBean(PersonChannelRepository.class).init();
         ContainerDI.getBean(MessageRepository.class).init();
         
-        ContainerDI.getBean(ChannelRepository.class)
-                .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20);
+        //выводим все чаты пользователя по его логину
+        Entity.printResultSetSimple(
+            ContainerDI.getBean(ChannelRepository.class)
+                    .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20)
+        );
+        
+        //выводим все сообщения чата пользователя по его логину и чату
+        Entity.printResultSetSimple(
+            ContainerDI.getBean(MessageRepository.class)
+                    .getAllMessagesByPersonLoginAndChannelWithPagination("ivanov", 1, 0, 20)
+        );
         
         //запуск сервера
         Server server = ContainerDI.getBean(Server.class); //берем бин сервера из DI-контейнера

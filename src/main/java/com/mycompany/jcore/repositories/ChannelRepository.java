@@ -18,14 +18,19 @@ public class ChannelRepository extends Repository<Channel, Channel> {
     
     public ResultSet getAllGroupsByPersonLoginWithPagination(String loginPerson, int page, int size) throws SQLException
     {
-        ResultSet data = super.getEntity().getData(
-                "channel.id, channel.name", 
+        ResultSet data = super.getEntity().executeSQL(
+                "SELECT channel.id, channel.name FROM channel " +
                 "INNER JOIN personchannel pc ON channel.id = pc.channelid " +
                 "INNER JOIN person p ON pc.personid = p.id " +
-                "WHERE p.login = '" + loginPerson + "' " + 
-                "LIMIT " + size + " OFFSET " + (page * size));
-            
-        Entity.printResultSetSimple(data);
+                "WHERE p.login = ? " +
+                "LIMIT ? OFFSET ?",
+                new Object[]
+                {
+                    loginPerson,
+                    size,
+                    (page * size)
+                }
+        );
         
         return data;
     }
