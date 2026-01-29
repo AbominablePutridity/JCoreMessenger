@@ -16,6 +16,7 @@ D:\MyMessengerJava\JCore\src\main\java\vendor\ControllerComponent\Controller.jav
 D:\MyMessengerJava\JCore\src\main\java\vendor\DI\ConfigDI.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\DI\ContainerDI.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\ConfigJDBC.java
+D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\DataSerializer.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\Entity.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\EntityInfo.java
 D:\MyMessengerJava\JCore\src\main\java\vendor\EntityOrm\FieldNameWithType.java

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import vendor.ControllerComponent.Connection.Server;
 import vendor.DI.ConfigDI;
 import vendor.DI.ContainerDI;
+import vendor.EntityOrm.DataSerializer;
 import vendor.EntityOrm.Entity;
 
 /**
@@ -29,15 +30,19 @@ public class JCore {
         ContainerDI.getBean(MessageRepository.class).init();
         
         //выводим все чаты пользователя по его логину
-        Entity.printResultSetSimple(
-            ContainerDI.getBean(ChannelRepository.class)
-                    .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20)
+        DataSerializer.printList(
+            DataSerializer.serializeFromResultDataToList(
+                ContainerDI.getBean(ChannelRepository.class)
+                        .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20)
+            )
         );
         
         //выводим все сообщения чата пользователя по его логину и чату
-        Entity.printResultSetSimple(
-            ContainerDI.getBean(MessageRepository.class)
-                    .getAllMessagesByPersonLoginAndChannelWithPagination("ivanov", 1, 0, 20)
+        DataSerializer.printList(
+            DataSerializer.serializeFromResultDataToList(
+                ContainerDI.getBean(MessageRepository.class)
+                        .getAllMessagesByPersonLoginAndChannelWithPagination("ivanov", 1, 0, 20)
+            )
         );
         
         //запуск сервера
