@@ -11,6 +11,8 @@ import com.mycompany.jcore.repositories.PersonChannelRepository;
 import com.mycompany.jcore.repositories.PersonRepository;
 import vendor.EntityOrm.Repository;
 import com.mycompany.jcore.service.ChannelService;
+import com.mycompany.jcore.service.PersonChannelService;
+import com.mycompany.jcore.service.PersonService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,7 +31,7 @@ public class ConfigDI {
      * Задаем базовые бины в контейнер (для дальнейшего внедрения).
      * @throws SQLException 
      */
-    public static void setBeans() throws SQLException
+    public static void setBeans() throws SQLException, Exception
     {
         //регестрируем бин для маршрутизации контроллеров в приложении
         ContainerDI.register(Controller.class, new Controller());
@@ -74,8 +76,16 @@ public class ConfigDI {
         
         //сервисы
         ContainerDI.register(ChannelService.class, new ChannelService(ContainerDI.getBean(ChannelRepository.class)));
+        ContainerDI.register(PersonService.class, new PersonService(ContainerDI.getBean(PersonRepository.class)));
+        ContainerDI.register(PersonChannelService.class, new PersonChannelService(ContainerDI.getBean(PersonChannelRepository.class)));
         
         //контроллеры
-        ContainerDI.register(ChannelController.class, new ChannelController(ContainerDI.getBean(ChannelService.class), ContainerDI.getBean(Statement.class)));
+        ContainerDI.register(ChannelController.class, new ChannelController(
+                ContainerDI.getBean(ChannelService.class),
+                ContainerDI.getBean(PersonService.class),
+                ContainerDI.getBean(Statement.class),
+                ContainerDI.getBean(PersonChannelService.class)
+            )
+        );
     }
 }

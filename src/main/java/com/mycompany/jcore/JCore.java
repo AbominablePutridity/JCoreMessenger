@@ -24,8 +24,8 @@ public class JCore {
         ConfigDI.setBeans();
         
         // создаем схемы таблицам БД, вызывая методы init() на бинах репозиториев сущностей
-        ContainerDI.getBean(ChannelRepository.class).init();
         ContainerDI.getBean(PersonRepository.class).init();
+        ContainerDI.getBean(ChannelRepository.class).init();
         ContainerDI.getBean(PersonChannelRepository.class).init();
         ContainerDI.getBean(MessageRepository.class).init();
         

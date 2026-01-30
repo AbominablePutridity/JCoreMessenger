@@ -1,11 +1,3 @@
--- Вставка данных в таблицу channel
-INSERT INTO public.channel (id, name) VALUES
-(1, 'Основной канал'),
-(2, 'Технический чат'),
-(3, 'Общий чат'),
-(4, 'Поддержка'),
-(5, 'Новости');
-
 -- Вставка данных в таблицу person
 INSERT INTO public.person (id, name, surname, login, password, role, identitycode) VALUES
 (1, 'Иван', 'Иванов', 'ivanov', 'password123', 'admin', 'ID123456'),
@@ -13,6 +5,14 @@ INSERT INTO public.person (id, name, surname, login, password, role, identitycod
 (3, 'Алексей', 'Сидоров', 'sidorov', 'pass123', 'user', 'ID345678'),
 (4, 'Елена', 'Козлова', 'kozlova', 'elena2024', 'moderator', 'ID901234'),
 (5, 'Дмитрий', 'Смирнов', 'smirnov', 'dima123', 'user', 'ID567890');
+
+-- Вставка данных в таблицу channel
+INSERT INTO public.channel (id, name, personid) VALUES
+(1, 'Основной канал', 1),
+(2, 'Технический чат', 2),
+(3, 'Общий чат', 1),
+(4, 'Поддержка', 3),
+(5, 'Новости', 4);
 
 -- Вставка данных в таблицу personchannel (связь пользователей с каналами)
 INSERT INTO public.personchannel (id, personid, channelid) VALUES

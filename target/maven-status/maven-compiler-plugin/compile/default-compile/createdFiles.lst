@@ -4,6 +4,8 @@ vendor\DI\ConfigDI.class
 vendor\EntityOrm\ConfigJDBC.class
 com\mycompany\jcore\service\PersonService.class
 com\mycompany\jcore\entities\Channel.class
+com\mycompany\jcore\controller\PersonChannelController.class
+com\mycompany\jcore\service\PersonChannelService.class
 vendor\EntityOrm\DataSerializer.class
 vendor\EntityOrm\Entity.class
 vendor\JCoreMeta.class

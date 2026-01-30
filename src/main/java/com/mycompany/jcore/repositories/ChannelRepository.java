@@ -4,6 +4,7 @@ import vendor.EntityOrm.Repository;
 import com.mycompany.jcore.entities.Channel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import vendor.DI.ContainerDI;
 import vendor.EntityOrm.Entity;
 
 /**
@@ -33,5 +34,29 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         );
         
         return data;
+    }
+    
+    /**
+     * Создаем группу по названию и id автора с возвращением его id.
+     * @param groupName Имя новой группы
+     * @param personId id персоны-создателя
+     * @return id создаваемой записи
+     * @throws SQLException 
+     */
+    public ResultSet createGroupWithReturningId(String groupName, long personId) throws SQLException
+    {
+        ResultSet result = super.getEntity().executeSQL(
+                """
+                INSERT INTO channel (name, personid) VALUES(?, ?)
+                RETURNING id;
+                """,
+                new Object[]
+                {
+                    groupName,
+                    personId
+                }
+        );
+        
+        return result;
     }
 }
