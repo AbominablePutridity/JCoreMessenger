@@ -29,19 +29,39 @@ public class JCore {
         ContainerDI.getBean(PersonChannelRepository.class).init();
         ContainerDI.getBean(MessageRepository.class).init();
         
-        //выводим все чаты пользователя по его логину
-        DataSerializer.printList(
-            DataSerializer.serializeFromResultDataToList(
-                ContainerDI.getBean(ChannelRepository.class)
-                        .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20)
+//        //выводим все чаты пользователя по его логину
+//        DataSerializer.printList(
+//            DataSerializer.serializeFromResultDataToList(
+//                ContainerDI.getBean(ChannelRepository.class)
+//                        .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20)
+//            )
+//        );
+//        
+//        //выводим все сообщения чата пользователя по его логину и чату
+//        DataSerializer.printList(
+//            DataSerializer.serializeFromResultDataToList(
+//                ContainerDI.getBean(MessageRepository.class)
+//                        .getAllMessagesByPersonLoginAndChannelWithPagination("ivanov", 1, 0, 20)
+//            )
+//        );
+        
+        //выводим сериализованный лист с данными в формате json
+        System.out.println(
+            DataSerializer.convertToJson(
+                DataSerializer.serializeFromResultDataToList(
+                    ContainerDI.getBean(ChannelRepository.class)
+                            .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20)
+                )
             )
         );
         
-        //выводим все сообщения чата пользователя по его логину и чату
-        DataSerializer.printList(
-            DataSerializer.serializeFromResultDataToList(
-                ContainerDI.getBean(MessageRepository.class)
-                        .getAllMessagesByPersonLoginAndChannelWithPagination("ivanov", 1, 0, 20)
+        //выводим сериализованный лист с данными в формате json
+        System.out.println(
+            DataSerializer.convertToJson(
+                DataSerializer.serializeFromResultDataToList(
+                    ContainerDI.getBean(MessageRepository.class)
+                            .getAllMessagesByPersonLoginAndChannelWithPagination("ivanov", 1, 0, 20)
+                )
             )
         );
         
