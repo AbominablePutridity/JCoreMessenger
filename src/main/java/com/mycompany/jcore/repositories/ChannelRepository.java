@@ -16,7 +16,7 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         super(entityClass);
     }
     
-    public ResultSet getAllGroupsByPersonLoginWithPagination(String loginPerson, int page, int size) throws SQLException
+    public ResultSet getAllGroupsByPersonLoginWithPagination(String loginPerson, long page, long size) throws SQLException
     {
         ResultSet data = super.getEntity().executeSQL(
                 "SELECT channel.id, channel.name FROM channel " +

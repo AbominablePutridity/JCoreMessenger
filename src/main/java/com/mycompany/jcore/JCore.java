@@ -29,42 +29,6 @@ public class JCore {
         ContainerDI.getBean(PersonChannelRepository.class).init();
         ContainerDI.getBean(MessageRepository.class).init();
         
-//        //выводим все чаты пользователя по его логину
-//        DataSerializer.printList(
-//            DataSerializer.serializeFromResultDataToList(
-//                ContainerDI.getBean(ChannelRepository.class)
-//                        .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20)
-//            )
-//        );
-//        
-//        //выводим все сообщения чата пользователя по его логину и чату
-//        DataSerializer.printList(
-//            DataSerializer.serializeFromResultDataToList(
-//                ContainerDI.getBean(MessageRepository.class)
-//                        .getAllMessagesByPersonLoginAndChannelWithPagination("ivanov", 1, 0, 20)
-//            )
-//        );
-        
-        //выводим сериализованный лист с данными в формате json
-        System.out.println(
-            DataSerializer.convertToJson(
-                DataSerializer.serializeFromResultDataToList(
-                    ContainerDI.getBean(ChannelRepository.class)
-                            .getAllGroupsByPersonLoginWithPagination("ivanov", 0, 20)
-                )
-            )
-        );
-        
-        //выводим сериализованный лист с данными в формате json
-        System.out.println(
-            DataSerializer.convertToJson(
-                DataSerializer.serializeFromResultDataToList(
-                    ContainerDI.getBean(MessageRepository.class)
-                            .getAllMessagesByPersonLoginAndChannelWithPagination("ivanov", 1, 0, 20)
-                )
-            )
-        );
-        
         //запуск сервера
         Server server = ContainerDI.getBean(Server.class); //берем бин сервера из DI-контейнера
         
@@ -73,5 +37,12 @@ public class JCore {
         server.controllerPull.declaredControllers.add(ContainerDI.getBean(ChannelController.class));
         
         server.startServer(); //запускаем сервер
+        
+        /*
+        Настройки для PuTTY (по умолчанию, для тестирования роутов):
+        1) Host name (or IP address) - 127.0.0.1 Port - 8082 - по умолчанию
+        2) Connection type - Other -> Raw
+        3) Close window on exit - Never
+        */
     }
 }
