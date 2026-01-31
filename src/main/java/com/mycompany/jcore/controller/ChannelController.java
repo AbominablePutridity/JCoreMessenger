@@ -52,7 +52,7 @@ public class ChannelController extends Security {
 //            System.out.println("param is -> " + param);
 //        }
         
-        if(super.checkRole("Person", "login", "password", "role", "admin", params)) { //проверка пользователя (Security-модуль)
+        if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
             result = channelService.getAllChannelsByUserLogin(
                     //берем логин из параметров
                     super.extractLoginAndPasswordFromClientQuery(params)[0],
@@ -62,7 +62,6 @@ public class ChannelController extends Security {
                     Long.parseLong(params[1])
             );
             
-            //return DataSerializer.convertToEncoding(result);
             return result;
         } else {
             return super.returnException();
@@ -80,23 +79,53 @@ public class ChannelController extends Security {
      * @param params Параметры запроса пользователя.
      * @return Ответ сервера в виде строки.
      */
-    public int createMyChannelAction(String params[]) throws SQLException
+    public String createMyChannelAction(String params[])
     {
-        int result = -1;
-        
-        if(super.checkRole("Person", "login", "password", "role", "admin", params)) { //проверка пользователя (Security-модуль)
-
-            long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
-            long channelId = channelService.createChannelWithReturningId(params[0], personId);
-            
-//            System.out.println("personId = " + personId);
-//            System.out.println("channelId = " + channelId);
-            
-            result = personChannelService.createPersonChannel(personId, channelId);
-            
-            return result;
+        if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
+            try {
+                long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
+                long channelId = channelService.createChannelWithReturningId(params[0], personId);
+           
+                personChannelService.createPersonChannel(personId, channelId);
+                
+                return "201 - успешное выполнение";
+            } catch (SQLException e) {
+                return "ОШИБКА ВЫПОЛНЕНИЯ: " + e.getMessage();
+            }
         } else {
-            return result;
+            return "403";
+        }
+    }
+    
+    /**
+     * Создать свою группу.
+     * 
+     * ChannelController/deleteMyChannelAction<endl>1<endl>ivanov<security>password123<endl>
+     * 
+     * params[0] - channelId
+     * params[1] - Security 
+     * 
+     * @param params Параметры запроса пользователя.
+     * @return Ответ сервера в виде строки.
+     */
+    public String deleteMyChannelAction(String params[])
+    {
+        long result = -1;
+        
+        if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
+            try {
+                long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
+                long channelId = Long.parseLong(params[0]);
+           
+                result = channelService.deleteChannel(channelId, personId);
+                
+                return "201 - успешное выполнение: удалено - " + result;
+            } catch (SQLException e)
+            {
+                return "ОШИБКА ПРИ ОПЕРАЦИИ: " + e.getMessage();
+            }
+        } else {
+            return "403";
         }
     }
 }

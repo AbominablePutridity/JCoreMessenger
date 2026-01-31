@@ -61,4 +61,16 @@ public class ChannelService {
         
         return id;
     }
+    
+    /**
+     * Удалить группу его же автором
+     * @param channelId id группы
+     * @param personId id автора
+     * @return
+     * @throws SQLException 
+     */
+    public long deleteChannel(long channelId, long personId) throws SQLException
+    {
+        return channelRepository.deleteChannelByIdWithPersonId(channelId, channelId);
+    }
 }

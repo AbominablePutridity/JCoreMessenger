@@ -1,9 +1,9 @@
 -- Вставка данных в таблицу person
 INSERT INTO public.person (id, name, surname, login, password, role, identitycode) VALUES
-(1, 'Иван', 'Иванов', 'ivanov', 'password123', 'admin', 'ID123456'),
+(1, 'Иван', 'Иванов', 'ivanov', 'password123', 'user', 'ID123456'),
 (2, 'Мария', 'Петрова', 'petrova', 'qwerty', 'user', 'ID789012'),
 (3, 'Алексей', 'Сидоров', 'sidorov', 'pass123', 'user', 'ID345678'),
-(4, 'Елена', 'Козлова', 'kozlova', 'elena2024', 'moderator', 'ID901234'),
+(4, 'Елена', 'Козлова', 'kozlova', 'elena2024', 'user', 'ID901234'),
 (5, 'Дмитрий', 'Смирнов', 'smirnov', 'dima123', 'user', 'ID567890');
 
 -- Вставка данных в таблицу channel

@@ -59,4 +59,29 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         
         return result;
     }
+    
+    /**
+     * Удаляем канал по его id и id-Автора
+     * @param channelId id удаляемого канала
+     * @param personAuthorChannelId id удаляемого автора
+     * @return
+     * @throws SQLException 
+     */
+    public int deleteChannelByIdWithPersonId(long channelId, long personAuthorChannelId) throws SQLException
+    {
+        int result = super.getEntity().executeUpdate(
+                """
+                DELETE FROM channel c
+                USING person p
+                WHERE c.personid = ? AND c.id = ?
+                """,
+                new Object[]
+                {
+                    personAuthorChannelId,
+                    channelId
+                }
+        );
+        
+        return result;
+    }
 }
