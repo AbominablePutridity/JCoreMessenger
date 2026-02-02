@@ -114,12 +114,13 @@ public class PersonChannelController extends Security {
     {
         try {
             //берем логин из параметров
+            long channelId = Long.parseLong(params[0]);
             long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
             long page = Long.parseLong(params[1]);
             long size = Long.parseLong(params[2]);
             
             //выводим сериализованный лист с данными в формате json
-            return personChannelService.getPersonsFromChannel(personId, personId, page, size);
+            return personChannelService.getPersonsFromChannel(channelId, personId, page, size);
         } catch (SQLException e)
         {
             return("ОШИБКА ВЫПОЛНЕНИЯ: " + e.getMessage());

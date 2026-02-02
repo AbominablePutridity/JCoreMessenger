@@ -128,7 +128,7 @@ public class PersonChannelRepository extends Repository<PersonChannel, PersonCha
                 WHERE pc.channelid IN(
                     SELECT pc.channelid
                     FROM personchannel pc
-                    WHERE pc.personId = ? AND pc.channelId = ?
+                    WHERE pc.personid = ? AND pc.channelid = ?
                 )
                 LIMIT ? OFFSET ?
                 """,
