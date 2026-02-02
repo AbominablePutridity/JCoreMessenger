@@ -64,4 +64,44 @@ public class PersonChannelRepository extends Repository<PersonChannel, PersonCha
         
         return result;
     }
+    
+    /*
+    -- Добавим пользователя 'alex' только если не существует пользователя с таким именем
+    INSERT INTO users (username, email)
+    SELECT 'alex', 'alex@example.com'
+    WHERE NOT EXISTS (
+        SELECT 1 FROM users WHERE username = 'alex'
+    );
+    */
+    
+    public int addPersonChannelByIdWithPersonId(long channelId, long personAuthorChannelId, long personForAddId) throws SQLException
+    {
+        int result = super.getEntity().executeUpdate(
+                """
+                INSERT INTO personchannel(personid, channelid)
+                SELECT ?, ?
+                FROM personchannel pc
+                JOIN channel c ON c.personid = pc.personid
+                WHERE c.personid = ? AND c.id = ? AND pc.channelid = ?
+                AND NOT EXISTS (
+                    SELECT 1 FROM personchannel pc_exist
+                    WHERE pc_exist.personid = ?   -- Проверяем, что добавляемый человек
+                    AND pc_exist.channelid = ?  -- Еще не состоит в этом канале
+                )
+                """,
+                new Object[]
+                {
+                    personForAddId,
+                    channelId,
+                    personAuthorChannelId,
+                    channelId,
+                    channelId,
+                    
+                    personForAddId,
+                    channelId
+                }
+        );
+        
+        return result;
+    }
 }

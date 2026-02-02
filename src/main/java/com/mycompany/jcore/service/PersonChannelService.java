@@ -43,4 +43,9 @@ public class PersonChannelService {
     {
         return personChannelRepository.deletePersonChannelByIdWithPersonId(channelId, personAuthorChannelId, personForDeleteId);
     }
+    
+    public int addPersonChannelByIdWithPersonId(long channelId, long personAuthorChannelId, long personForAddId) throws SQLException
+    {
+        return personChannelRepository.addPersonChannelByIdWithPersonId(channelId, personAuthorChannelId, personForAddId);
+    }
 }

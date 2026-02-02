@@ -1,6 +1,7 @@
 package vendor.DI;
 
 import com.mycompany.jcore.controller.ChannelController;
+import com.mycompany.jcore.controller.PersonChannelController;
 import com.mycompany.jcore.entities.Channel;
 import com.mycompany.jcore.entities.Message;
 import com.mycompany.jcore.entities.Person;
@@ -85,6 +86,13 @@ public class ConfigDI {
                 ContainerDI.getBean(PersonService.class),
                 ContainerDI.getBean(Statement.class),
                 ContainerDI.getBean(PersonChannelService.class)
+            )
+        );
+        
+        ContainerDI.register(PersonChannelController.class, new PersonChannelController(
+                ContainerDI.getBean(PersonChannelService.class),
+                ContainerDI.getBean(PersonService.class),
+                ContainerDI.getBean(Statement.class)
             )
         );
     }

@@ -98,7 +98,7 @@ public class ChannelController extends Security {
     }
     
     /**
-     * Создать свою группу.
+     * Удалить свою группу.
      * 
      * ChannelController/deleteMyChannelAction<endl>1<endl>ivanov<security>password123<endl>
      * 
@@ -120,6 +120,40 @@ public class ChannelController extends Security {
                 result = channelService.deleteChannel(channelId, personId);
                 
                 return "201 - успешное выполнение: удалено - " + result;
+            } catch (SQLException e)
+            {
+                return "ОШИБКА ПРИ ОПЕРАЦИИ: " + e.getMessage();
+            }
+        } else {
+            return "403";
+        }
+    }
+    
+    /**
+     * Обновить свою группу.
+     * 
+     * ChannelController/updateMyChannelAction<endl>1<endl>НОВОЕ НАЗВАНИЕ ЭТОМУ КАНАЛУ!<endl>ivanov<security>password123<endl>
+     * 
+     * params[0] - channelId
+     * params[1] - newChannelName
+     * params[2] - Security 
+     * 
+     * @param params Параметры запроса пользователя.
+     * @return Ответ сервера в виде строки.
+     */
+    public String updateMyChannelAction(String params[])
+    {
+        long result = -1;
+        
+        if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
+            try {
+                long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
+                long channelId = Long.parseLong(params[0]);
+                String newChannelName = params[1];
+           
+                result = channelService.updateChannel(personId, channelId, newChannelName);
+                
+                return "201 - успешное выполнение: обновленно - " + result;
             } catch (SQLException e)
             {
                 return "ОШИБКА ПРИ ОПЕРАЦИИ: " + e.getMessage();

@@ -84,4 +84,33 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         
         return result;
     }
+    
+    /**
+     * Обновляем данные о канале по его автору
+     * @param authorId id автора канала (текущего пользователя)
+     * @param channelId id канала, у которого меняем данные
+     * @param newName новое название канала для замены
+     * @return
+     * @throws SQLException 
+     */
+    public int updateChannelByAuthor(long authorId, long channelId, String newName) throws SQLException
+    {
+        int result = super.getEntity().executeUpdate(
+                """
+                UPDATE channel c
+                SET
+                    name = ?
+                WHERE
+                    c.personid = ? AND c.id = ?
+                """,
+                new Object[]
+                {
+                    newName,
+                    authorId,
+                    channelId
+                }
+        );
+        
+        return result;
+    }
 }

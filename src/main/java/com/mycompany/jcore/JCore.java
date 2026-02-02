@@ -1,6 +1,7 @@
 package com.mycompany.jcore;
 
 import com.mycompany.jcore.controller.ChannelController;
+import com.mycompany.jcore.controller.PersonChannelController;
 import com.mycompany.jcore.repositories.ChannelRepository;
 import com.mycompany.jcore.repositories.MessageRepository;
 import com.mycompany.jcore.repositories.PersonChannelRepository;
@@ -35,6 +36,7 @@ public class JCore {
         // регестрируем все наши контроллеры на сервере (для роутинга)
         //server.controllerPull.declaredControllers.add(new PersonController(ContainerDI.getBean(Statement.class)));
         server.controllerPull.declaredControllers.add(ContainerDI.getBean(ChannelController.class));
+        server.controllerPull.declaredControllers.add(ContainerDI.getBean(PersonChannelController.class));
         
         server.startServer(); //запускаем сервер
         

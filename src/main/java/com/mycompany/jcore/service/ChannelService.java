@@ -73,4 +73,17 @@ public class ChannelService {
     {
         return channelRepository.deleteChannelByIdWithPersonId(channelId, channelId);
     }
+    
+    /**
+     * Обновить канал по id автора и id канала
+     * @param authorId id автора (текущего пользователя)
+     * @param channelId id канала, которому хотим поменять данные
+     * @param newName новые данные для замены (только название канала)
+     * @return
+     * @throws SQLException 
+     */
+    public long updateChannel(long authorId, long channelId, String newName) throws SQLException
+    {
+        return channelRepository.updateChannelByAuthor(authorId, channelId, newName);
+    }
 }
