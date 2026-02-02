@@ -17,17 +17,27 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         super(entityClass);
     }
     
-    public ResultSet getAllGroupsByPersonLoginWithPagination(String loginPerson, long page, long size) throws SQLException
+    /**
+     * Взять все каналы текущей персоны
+     * @param personId id персоны
+     * @param page страница для вывода
+     * @param size количество элементов на странице
+     * @return данные из БД
+     * @throws SQLException 
+     */
+    public ResultSet getAllGroupsByPersonLoginWithPagination(long personId, long page, long size) throws SQLException
     {
         ResultSet data = super.getEntity().executeSQL(
-                "SELECT channel.id, channel.name FROM channel " +
-                "INNER JOIN personchannel pc ON channel.id = pc.channelid " +
-                "INNER JOIN person p ON pc.personid = p.id " +
-                "WHERE p.login = ? " +
-                "LIMIT ? OFFSET ?",
+                """
+                SELECT channel.id, channel.name FROM channel
+                INNER JOIN personchannel pc ON channel.id = pc.channelid
+                INNER JOIN person p ON pc.personid = p.id
+                WHERE p.id = ?
+                LIMIT ? OFFSET ?
+                """,
                 new Object[]
                 {
-                    loginPerson,
+                    personId,
                     size,
                     (page * size)
                 }

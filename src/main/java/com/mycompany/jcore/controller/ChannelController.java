@@ -51,15 +51,17 @@ public class ChannelController extends Security {
 //            result += "param is -> " + param + "\r\n";
 //            System.out.println("param is -> " + param);
 //        }
+
+        //берем логин, page и size из параметров
+        long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
+        long page = Long.parseLong(params[0]);
+        long size = Long.parseLong(params[1]);
         
         if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
             result = channelService.getAllChannelsByUserLogin(
-                    //берем логин из параметров
-                    super.extractLoginAndPasswordFromClientQuery(params)[0],
-                    //параметр page в запросе
-                    Long.parseLong(params[0]),
-                    //параметр size в запросе
-                    Long.parseLong(params[1])
+                    personId,
+                    page,
+                    size
             );
             
             return result;

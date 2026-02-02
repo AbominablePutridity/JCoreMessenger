@@ -18,20 +18,20 @@ public class ChannelService {
     }
     
     /**
-     * Взять все каналы пользователя по его логину
-     * @param userLogin логин пользователя
+     * Взять все каналы пользователя по его id.
+     * @param personId id текущего пользователя.
      * @param page страница.
      * @param size количество элементов на странице.
      * @return каналы пользователя.
      * @throws SQLException 
      */
-    public String getAllChannelsByUserLogin(String userLogin, long page, long size) throws SQLException
+    public String getAllChannelsByUserLogin(long personId, long page, long size) throws SQLException
     {
         //выводим сериализованный лист с данными в формате json
         return DataSerializer.convertToJson(
             DataSerializer.serializeFromResultDataToList(
                 channelRepository
-                        .getAllGroupsByPersonLoginWithPagination(userLogin, page, size)
+                        .getAllGroupsByPersonLoginWithPagination(personId, page, size)
             )
         );
     }

@@ -96,4 +96,33 @@ public class PersonChannelController extends Security {
             return "403";
         }
     }
+    
+    /**
+     * Вывести всех участников группы (если пользователь сам учавствует в этой группе)
+     * 
+     * PersonChannelController/getPersonsFromChannelAction<endl>1<endl>0<endl>20<endl>ivanov<security>password123<endl>
+     * 
+     * params[0] - channelId
+     * params[1] - page
+     * params[2] - size
+     * params[3] - Security 
+     * 
+     * @param params Параметры запроса пользователя.
+     * @return Ответ сервера в виде строки.
+     */
+    public String getPersonsFromChannelAction(String params[])
+    {
+        try {
+            //берем логин из параметров
+            long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
+            long page = Long.parseLong(params[1]);
+            long size = Long.parseLong(params[2]);
+            
+            //выводим сериализованный лист с данными в формате json
+            return personChannelService.getPersonsFromChannel(personId, personId, page, size);
+        } catch (SQLException e)
+        {
+            return("ОШИБКА ВЫПОЛНЕНИЯ: " + e.getMessage());
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.mycompany.jcore.repositories;
 
 import vendor.EntityOrm.Repository;
 import com.mycompany.jcore.entities.PersonChannel;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import vendor.EntityOrm.Entity;
 
@@ -65,15 +66,14 @@ public class PersonChannelRepository extends Repository<PersonChannel, PersonCha
         return result;
     }
     
-    /*
-    -- Добавим пользователя 'alex' только если не существует пользователя с таким именем
-    INSERT INTO users (username, email)
-    SELECT 'alex', 'alex@example.com'
-    WHERE NOT EXISTS (
-        SELECT 1 FROM users WHERE username = 'alex'
-    );
-    */
-    
+    /**
+     * Добавить персону в канал по id канала и персоны
+     * @param channelId id канала, в который добавить персону
+     * @param personAuthorChannelId id автора канала (текущего пользователя)
+     * @param personForAddId id персоны для добавления в канал
+     * @return количество вставленных строк
+     * @throws SQLException 
+     */
     public int addPersonChannelByIdWithPersonId(long channelId, long personAuthorChannelId, long personForAddId) throws SQLException
     {
         int result = super.getEntity().executeUpdate(
@@ -103,5 +103,44 @@ public class PersonChannelRepository extends Repository<PersonChannel, PersonCha
         );
         
         return result;
+    }
+    
+    /**
+     * Просмотр всех персон в данном канале
+     * @param idChannel id канала для просмотра персон, состоящих в данном канале
+     * @param personId id персоны, состоящей в данном канале (id текущего пользователя)
+     * @param page страница для просмотра
+     * @param size количество элементов на странице
+     * @return данные пользователей из БД
+     */
+    public ResultSet getPersonsFromChannel(long idChannel, long personId, long page, long size) throws SQLException
+    {
+        ResultSet data = super.getEntity().executeSQL(
+                """
+                SELECT
+                    p.id,
+                    p.identityCode,
+                    p.name,
+                    p.surname,
+                    p.role
+                FROM personchannel pc
+                JOIN person p ON pc.personid = p.id
+                WHERE pc.channelid IN(
+                    SELECT pc.channelid
+                    FROM personchannel pc
+                    WHERE pc.personId = ? AND pc.channelId = ?
+                )
+                LIMIT ? OFFSET ?
+                """,
+                new Object[]
+                {
+                    personId,
+                    idChannel,
+                    size,
+                    (page * size)
+                }
+        );
+        
+        return data;
     }
 }
