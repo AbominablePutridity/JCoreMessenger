@@ -1,6 +1,7 @@
 package com.mycompany.jcore;
 
 import com.mycompany.jcore.controller.ChannelController;
+import com.mycompany.jcore.controller.MessageController;
 import com.mycompany.jcore.controller.PersonChannelController;
 import com.mycompany.jcore.repositories.ChannelRepository;
 import com.mycompany.jcore.repositories.MessageRepository;
@@ -37,6 +38,7 @@ public class JCore {
         //server.controllerPull.declaredControllers.add(new PersonController(ContainerDI.getBean(Statement.class)));
         server.controllerPull.declaredControllers.add(ContainerDI.getBean(ChannelController.class));
         server.controllerPull.declaredControllers.add(ContainerDI.getBean(PersonChannelController.class));
+        server.controllerPull.declaredControllers.add(ContainerDI.getBean(MessageController.class));
         
         server.startServer(); //запускаем сервер
         

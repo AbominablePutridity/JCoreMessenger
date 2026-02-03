@@ -1,6 +1,7 @@
 package vendor.DI;
 
 import com.mycompany.jcore.controller.ChannelController;
+import com.mycompany.jcore.controller.MessageController;
 import com.mycompany.jcore.controller.PersonChannelController;
 import com.mycompany.jcore.entities.Channel;
 import com.mycompany.jcore.entities.Message;
@@ -12,6 +13,7 @@ import com.mycompany.jcore.repositories.PersonChannelRepository;
 import com.mycompany.jcore.repositories.PersonRepository;
 import vendor.EntityOrm.Repository;
 import com.mycompany.jcore.service.ChannelService;
+import com.mycompany.jcore.service.MessageService;
 import com.mycompany.jcore.service.PersonChannelService;
 import com.mycompany.jcore.service.PersonService;
 import java.sql.Connection;
@@ -79,6 +81,7 @@ public class ConfigDI {
         ContainerDI.register(ChannelService.class, new ChannelService(ContainerDI.getBean(ChannelRepository.class)));
         ContainerDI.register(PersonService.class, new PersonService(ContainerDI.getBean(PersonRepository.class)));
         ContainerDI.register(PersonChannelService.class, new PersonChannelService(ContainerDI.getBean(PersonChannelRepository.class)));
+        ContainerDI.register(MessageService.class, new MessageService(ContainerDI.getBean(MessageRepository.class)));
         
         //контроллеры
         ContainerDI.register(ChannelController.class, new ChannelController(
@@ -91,6 +94,13 @@ public class ConfigDI {
         
         ContainerDI.register(PersonChannelController.class, new PersonChannelController(
                 ContainerDI.getBean(PersonChannelService.class),
+                ContainerDI.getBean(PersonService.class),
+                ContainerDI.getBean(Statement.class)
+            )
+        );
+        
+        ContainerDI.register(MessageController.class, new MessageController(
+                ContainerDI.getBean(MessageService.class),
                 ContainerDI.getBean(PersonService.class),
                 ContainerDI.getBean(Statement.class)
             )

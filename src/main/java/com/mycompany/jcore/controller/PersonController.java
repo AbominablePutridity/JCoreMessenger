@@ -37,6 +37,4 @@ public class PersonController extends Security {
             return false;
         }
     }
-    
-    
 }

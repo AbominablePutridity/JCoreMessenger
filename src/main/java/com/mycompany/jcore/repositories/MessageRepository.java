@@ -19,9 +19,17 @@ public class MessageRepository extends Repository<Message, Message> {
         super(entityClass);
     }
     
-    public ResultSet getAllMessagesByPersonLoginAndChannelWithPagination(String loginPerson, long channelId, int page, int size) throws SQLException
+    /**
+     * Вывести все сообщения канала, в котором состоит пользователь по пагинации 
+     * @param personId id персоны
+     * @param channelId id канала для взятия сообщений
+     * @param page страница
+     * @param size количество элементов на странице
+     * @return данные из БД
+     * @throws SQLException 
+     */
+    public ResultSet getAllMessagesByPersonLoginAndChannelWithPagination(long personId, long channelId, long page, long size) throws SQLException
     {
-        
         // Запрос сработает в БД, но данные в Java не попадут
         ResultSet data = super.getEntity().executeSQL(
                 """
@@ -33,15 +41,16 @@ public class MessageRepository extends Repository<Message, Message> {
                       SELECT 1 
                       FROM personchannel pc_check
                       INNER JOIN person p ON pc_check.personid = p.id
-                      WHERE pc_check.channelid = 1 
-                        AND p.login = ?
+                      WHERE pc_check.channelid = ?
+                        AND p.id = ?
                   )
                 LIMIT ? OFFSET ?
                 """,
                 new Object[]
                 {
                     channelId,
-                    loginPerson,
+                    channelId,
+                    personId,
                     
                     size,
                     (page * size)
