@@ -33,4 +33,42 @@ public class MessageService {
             )
         );
     }
+    
+    /**
+     * Создать сообщение в канале пользователя
+     * @param personId id пользователя-создателя сообщения
+     * @param channelId id канала, в котором создать сообщение
+     * @param description содержимое сообщения
+     * @return количество созданных строк
+     * @throws SQLException 
+     */
+    public int createMessageInChannel(long personId, long channelId, String description) throws SQLException
+    {
+        return messageRepository.createMessageByUser(personId, channelId, description);
+    }
+    
+    /**
+     * Удалить сообщение пользователя в канале (если пользователь - создатель этого сообщения)
+     * @param personId id пользователя, удаляющего сообщения
+     * @param messageId id сообщения для удаления
+     * @return количество удаленных строк
+     */
+    public int deleteMessageInChannel(long personId, long messageId) throws SQLException
+    {
+        return messageRepository.deleteMyMessage(personId, messageId);
+    }
+    
+    /**
+     * Обновить сообщение в канале
+     * 
+     * @param personId id персоны, обновляющая свое сообщение
+     * @param messageId id сообщения для обновления
+     * @param newDescription обновленное сообщение для обновления
+     * @return количество обновленных строк
+     * @throws SQLException 
+     */
+    public int updateMessageInChannel(long personId, long messageId, String newDescription) throws SQLException
+    {
+        return messageRepository.updateMyMessage(personId, messageId, newDescription);
+    }
 }
