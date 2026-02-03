@@ -19,28 +19,58 @@ public class ChannelRepository extends Repository<Channel, Channel> {
     
     /**
      * Взять все каналы текущей персоны
+     * @param search Поисковая строка для сортировки по названию групп
      * @param personId id персоны
      * @param page страница для вывода
      * @param size количество элементов на странице
      * @return данные из БД
      * @throws SQLException 
      */
-    public ResultSet getAllGroupsByPersonLoginWithPagination(long personId, long page, long size) throws SQLException
-    {
-        ResultSet data = super.getEntity().executeSQL(
+    public ResultSet getAllGroupsByPersonLoginWithPagination(String search, long personId, long page, long size) throws SQLException
+    {   String query;
+        Object[] paramsToQuery;
+        
+        if(search != null && !search.trim().isEmpty())
+        {
+            query = 
+                """
+                SELECT channel.id, channel.name FROM channel
+                INNER JOIN personchannel pc ON channel.id = pc.channelid
+                INNER JOIN person p ON pc.personid = p.id
+                WHERE p.id = ? AND channel.name LIKE ?
+                LIMIT ? OFFSET ?
+                """;
+            
+            paramsToQuery =
+                new Object[]
+                {
+                    personId,
+                    "%" + search + "%",
+                    size,
+                    (page * size)
+                };
+        } else {
+            query = 
                 """
                 SELECT channel.id, channel.name FROM channel
                 INNER JOIN personchannel pc ON channel.id = pc.channelid
                 INNER JOIN person p ON pc.personid = p.id
                 WHERE p.id = ?
                 LIMIT ? OFFSET ?
-                """,
+                """;
+            
+            paramsToQuery =
                 new Object[]
                 {
                     personId,
                     size,
                     (page * size)
-                }
+                };
+        }
+        
+        ResultSet data = super.getEntity().executeSQL(
+                query,
+                paramsToQuery
         );
         
         return data;

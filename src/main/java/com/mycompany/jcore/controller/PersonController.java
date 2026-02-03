@@ -19,22 +19,24 @@ public class PersonController extends Security {
     /* telnet 127.0.0.1 8082
     запрос (через коммандную строку): PersonController/createPersonAction<endl>helloWorld!<endl>JCore!<endl>ivanov<security>pass<endl>
     */
-//    public String createPersonAction(String[] params)
-//    {
-//        String result = "";
-//        
-//        if(super.checkRole("Person", "login", "password", "role", "USER", params)) { //проверка пользователя (Security-модуль)   
-//            for(String param : params)
-//            {
-//                result += "param is -> " + param + "\r\n";
-//                System.out.println("param is -> " + param);
-//            }
-//            
-//            return result;
-//        } else {
-//            return super.returnException();
-//        }
-//    }
+    
+    /**
+     * Проверкалогина и пароля пользователя на соответствие из базы данных.
+     * 
+     * PersonController/checkLoginAndPassword<endl>ivanov<security>password123<endl>
+     * params[0] - Security
+     * 
+     * @param params
+     * @return true - если логин и пароль совпадают
+     */
+    public boolean checkLoginAndPassword(String[] params)
+    {
+        if(super.checkRole("Person", "login", "password", "role", "USER", params)) { //проверка пользователя (Security-модуль)   
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     
 }

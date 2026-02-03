@@ -33,16 +33,18 @@ public class ChannelController extends Security {
     /**
      * Вывести все текущие группы.
      * 
-     * ChannelController/getMyChannelsAction<endl>0<endl>20<endl>ivanov<security>password123<endl>
+     * ChannelController/getMyChannelsAction<endl><endl>0<endl>20<endl>ivanov<security>password123<endl>
+     * ChannelController/getMyChannelsAction<endl>сн<endl>0<endl>20<endl>ivanov<security>password123<endl>
      * 
-     * params[0] - page
-     * params[1] - size
-     * params[2] - Security
+     * params[0] - search
+     * params[1] - page
+     * params[2] - size
+     * params[3] - Security
      * 
      * @param params Параметры запроса пользователя.
      * @return Ответ сервера в виде строки.
      */
-    public String getMyChannelsAction(String params[]) throws SQLException
+    public String getMyChannelsAction(String params[])
     {
         String result = "";
         
@@ -51,20 +53,27 @@ public class ChannelController extends Security {
 //            result += "param is -> " + param + "\r\n";
 //            System.out.println("param is -> " + param);
 //        }
-
-        //берем логин, page и size из параметров
-        long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
-        long page = Long.parseLong(params[0]);
-        long size = Long.parseLong(params[1]);
         
         if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
-            result = channelService.getAllChannelsByUserLogin(
-                    personId,
-                    page,
-                    size
-            );
             
-            return result;
+            try {
+                //берем логин, page и size из параметров
+                long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
+                String search = params[0];
+                long page = Long.parseLong(params[1]);
+                long size = Long.parseLong(params[2]);
+
+                result = channelService.getAllChannelsByUserLogin(
+                        search,
+                        personId,
+                        page,
+                        size
+                );
+
+                return result;
+            } catch (SQLException e) {
+                return "ОШИБКА ВЫПОЛНЕНИЯ: " + e.getMessage();
+            }
         } else {
             return super.returnException();
         }

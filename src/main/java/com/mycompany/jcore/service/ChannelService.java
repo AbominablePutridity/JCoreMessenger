@@ -19,19 +19,20 @@ public class ChannelService {
     
     /**
      * Взять все каналы пользователя по его id.
+     * @param search Поисковая строка для сортировки по названию групп
      * @param personId id текущего пользователя.
      * @param page страница.
      * @param size количество элементов на странице.
      * @return каналы пользователя.
      * @throws SQLException 
      */
-    public String getAllChannelsByUserLogin(long personId, long page, long size) throws SQLException
+    public String getAllChannelsByUserLogin(String search, long personId, long page, long size) throws SQLException
     {
         //выводим сериализованный лист с данными в формате json
         return DataSerializer.convertToJson(
             DataSerializer.serializeFromResultDataToList(
                 channelRepository
-                        .getAllGroupsByPersonLoginWithPagination(personId, page, size)
+                        .getAllGroupsByPersonLoginWithPagination(search, personId, page, size)
             )
         );
     }
