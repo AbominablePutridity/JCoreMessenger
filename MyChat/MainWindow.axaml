@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MyChat.MainWindow"
+        Title="MyChat">
+
+    <Grid Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="400">
+        <StackPanel Spacing="15">
+            <Button Content="Нажми меня" 
+                Click="Button_Click"/>
+            <TextBlock x:Name="resultText" 
+                   Text="Текст будет меняться"/>
+
+            <TextBlock Text="Регистрация" FontSize="24" HorizontalAlignment="Center"/>
+            
+            <TextBox x:Name="LoginTextBox" Watermark="Логин"/>
+            
+            <TextBox x:Name="PasswordTextBox" Watermark="Пароль" PasswordChar="*"/>
+            
+            <Button x:Name="ConfirmButton" Content="Подтвердить" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+    </Grid>
+</Window>
