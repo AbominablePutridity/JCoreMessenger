@@ -31,7 +31,7 @@ public class PersonController extends Security {
      */
     public boolean checkLoginAndPassword(String[] params)
     {
-        if(super.checkRole("Person", "login", "password", "role", "USER", params)) { //проверка пользователя (Security-модуль)   
+        if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)   
             return true;
         } else {
             return false;

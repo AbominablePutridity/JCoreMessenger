@@ -3,6 +3,7 @@ package vendor.DI;
 import com.mycompany.jcore.controller.ChannelController;
 import com.mycompany.jcore.controller.MessageController;
 import com.mycompany.jcore.controller.PersonChannelController;
+import com.mycompany.jcore.controller.PersonController;
 import com.mycompany.jcore.entities.Channel;
 import com.mycompany.jcore.entities.Message;
 import com.mycompany.jcore.entities.Person;
@@ -102,6 +103,11 @@ public class ConfigDI {
         ContainerDI.register(MessageController.class, new MessageController(
                 ContainerDI.getBean(MessageService.class),
                 ContainerDI.getBean(PersonService.class),
+                ContainerDI.getBean(Statement.class)
+            )
+        );
+        
+        ContainerDI.register(PersonController.class, new PersonController(
                 ContainerDI.getBean(Statement.class)
             )
         );
