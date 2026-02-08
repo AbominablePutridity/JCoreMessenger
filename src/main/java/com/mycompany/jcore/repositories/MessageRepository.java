@@ -45,8 +45,8 @@ public class MessageRepository extends Repository<Message, Message> {
                       WHERE pc_check.channelid = ?
                         AND p.id = ?
                   )
+                ORDER BY m.date ASC
                 LIMIT ? OFFSET ?
-                ORDER BY m.date ASC;
                 """,
                 new Object[]
                 {
