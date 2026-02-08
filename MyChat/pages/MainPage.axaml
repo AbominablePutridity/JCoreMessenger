@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MyChat.pages.MainPage">
+
+        <Grid ColumnDefinitions="250, *">
+                <!-- Левая колонка: Список чатов -->
+                <Grid  Grid.Column="0" RowDefinitions="Auto, *" ColumnDefinitions="*,Auto">
+                        <TextBox x:Name="SearchField" Grid.Row="0" Grid.Column="0" Watermark="Поиск групп..." Margin="5"/>
+                        <Button x:Name="SearchBtn" Grid.Row="0" Grid.Column="1" Content= "Поиск" Click="Search_Button_Click"/>
+                        
+                        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                <!-- Сюда будем добавлять кнопки из кода -->
+                                <StackPanel x:Name="ChatContainer" Spacing="2" Margin="5" />
+                        </ScrollViewer>
+                </Grid>
+
+                <!-- Правая колонка: Окно сообщений -->
+                <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto" Margin="5">
+                        <!-- Верхняя панель -->
+                        <DockPanel Grid.Row="0" Margin="0,0,0,10">
+                                <Button Content="Участники" DockPanel.Dock="Right"/>
+                                <TextBlock Text="Название выбранной группы" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </DockPanel>
+
+                        <!-- Список сообщений -->
+                        <ListBox Grid.Row="1" Background="#F0F0F0">
+                                <ListBoxItem Content="Привет! Как дела?"/>
+                                <ListBoxItem Content="Все отлично, пишу на Avalonia!"/>
+                        </ListBox>
+
+                        <!-- Поле ввода -->
+                        <Grid Grid.Row="2" ColumnDefinitions="*, Auto" Margin="0,10,0,0">
+                                <TextBox Grid.Column="0" Watermark="Введите сообщение..."/>
+                                <Button Grid.Column="1" Content="Отправить" Margin="5,0,0,0"/>
+                        </Grid>
+                </Grid>
+        </Grid>
+</UserControl>

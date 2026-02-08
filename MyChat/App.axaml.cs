@@ -11,12 +11,7 @@ public partial class App : Application
 {
     public override void Initialize()
     {
-        // ЗАПУСКАЕМ КЛИЕНТ В ФОНОВОМ РЕЖИМЕ
-        //Task.Run(() => Client.getData());
-
-        AvaloniaXamlLoader.Load(this);
-
-         
+        AvaloniaXamlLoader.Load(this);    
     }
     
 

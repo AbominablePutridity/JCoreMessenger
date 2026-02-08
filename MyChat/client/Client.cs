@@ -3,14 +3,28 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using Avalonia.Controls;
 
 class Client
 {
-     public static string getData()
+    private static string server = "127.0.0.1";  
+    private static int port = 8082;
+
+    public static string login;
+    public static string password;
+
+    public static ContentControl contentControl;
+
+    public static string initializeSecurity()
     {
-        string server = "127.0.0.1";  
-        int port = 8082;               
-        
+        return "<endl>" + login + "<security>" + password + "<endl>";
+    }
+
+    //"ChannelController/getMyChannelsAction<endl><endl>0<endl>20"
+    public static string getData(string url)
+    {
+        url = url + initializeSecurity();
+
         try
         {
             using TcpClient client = new TcpClient(server, port);
@@ -25,7 +39,7 @@ class Client
             using StreamReader reader = new StreamReader(stream, utf8WithoutBom);
             
             // ОТПРАВЛЯЕМ
-            string message = "ChannelController/getMyChannelsAction<endl><endl>0<endl>20<endl>ivanov<security>password123<endl>";
+            string message = url;
             writer.WriteLine(message);
             Debug.WriteLine($"Отправлено: {message}");
             

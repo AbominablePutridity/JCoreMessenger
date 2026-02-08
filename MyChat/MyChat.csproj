@@ -18,4 +18,9 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+
+  <!-- ДОБАВЬТЕ ЭТОТ ItemGroup -->
+  <!-- <ItemGroup>
+    <AvaloniaResource Include="pages\*.axaml" />
+  </ItemGroup> -->
 </Project>
