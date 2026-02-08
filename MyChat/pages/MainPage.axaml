@@ -15,27 +15,12 @@
                                 <!-- Сюда будем добавлять кнопки из кода -->
                                 <StackPanel x:Name="ChatContainer" Spacing="2" Margin="5" />
                         </ScrollViewer>
+
+                        <Button x:Name="PagNextBtn" Grid.Row="2" Grid.Column="0" Content= "След." VerticalAlignment="Bottom"/>
+                        <Button x:Name="PagPrevBtn" Grid.Row="2" Grid.Column="1" Content= "Пред." VerticalAlignment="Bottom"/>
                 </Grid>
 
                 <!-- Правая колонка: Окно сообщений -->
-                <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto" Margin="5">
-                        <!-- Верхняя панель -->
-                        <DockPanel Grid.Row="0" Margin="0,0,0,10">
-                                <Button Content="Участники" DockPanel.Dock="Right"/>
-                                <TextBlock Text="Название выбранной группы" VerticalAlignment="Center" FontWeight="Bold"/>
-                        </DockPanel>
-
-                        <!-- Список сообщений -->
-                        <ListBox Grid.Row="1" Background="#F0F0F0">
-                                <ListBoxItem Content="Привет! Как дела?"/>
-                                <ListBoxItem Content="Все отлично, пишу на Avalonia!"/>
-                        </ListBox>
-
-                        <!-- Поле ввода -->
-                        <Grid Grid.Row="2" ColumnDefinitions="*, Auto" Margin="0,10,0,0">
-                                <TextBox Grid.Column="0" Watermark="Введите сообщение..."/>
-                                <Button Grid.Column="1" Content="Отправить" Margin="5,0,0,0"/>
-                        </Grid>
-                </Grid>
+                <ContentControl Grid.Column="1" Grid.Row="0" x:Name="MainContent" />
         </Grid>
 </UserControl>
