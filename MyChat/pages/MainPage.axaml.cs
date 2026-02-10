@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,12 +12,15 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 {
     public partial class MainPage : UserControl
     {
+        int page = 0;
+        int size = 20;
+
         public MainPage()
         {
             InitializeComponent();
 
             // загружаем страницу сообщений справа
-            MainContent.Content = new MessagesPage("");
+            MainContent.Content = new MessagesPage("", "Название группы");
 
             // загружаем список всех групп на первой странице слева
             getChannelsData("");
@@ -29,10 +33,26 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             SearchField.Text = "";
         }
 
+        public void Pag_Next_Btn(object sender, RoutedEventArgs e)
+        {
+            page = page + 1;
+
+            getChannelsData("");
+        }
+
+        public void Pag_Prev_Btn(object sender, RoutedEventArgs e)
+        {
+            if (page > 0) {
+                page = page - 1;
+
+                getChannelsData("");
+            }
+        }
+
         public void getChannelsData(string searchField)
         {
             // 0. формируем url для получения данных по нему от сервера
-            string url = "ChannelController/getMyChannelsAction<endl>" + searchField + "<endl>0<endl>20";
+            string url = "ChannelController/getMyChannelsAction<endl>" + searchField + "<endl>" + page + "<endl>" + size;
 
             // 1. получаем данные в формате json-строки от сервера
             string response = Client.getData(url);
@@ -64,7 +84,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                 {
                     // Этот код сработает при нажатии
                     string id = btn.Tag.ToString();
-                    LoadMessages(id); // Твой метод загрузки сообщений
+                    LoadMessages(id, item["name"].ToString()); // Твой метод загрузки сообщений
                 };
 
                 // 3. Добавляем кнопку в наш StackPanel
@@ -72,12 +92,12 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             }
         }
 
-        private void LoadMessages(string groupId)
+        private void LoadMessages(string groupId, String groupName)
         {
             // Здесь логика получения сообщений для конкретной группы
             Debug.WriteLine("selectedGroup => " + groupId);
 
-            MainContent.Content = new MessagesPage(groupId);
+            MainContent.Content = new MessagesPage(groupId, groupName);
         }
     }
 }

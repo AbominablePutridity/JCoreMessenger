@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "n9QHoVzNh1s=",
+  "dgSpecHash": "JGk7o+++6WI=",
   "success": true,
-  "projectFilePath": "D:\\AvaloniaProjects\\MyChat\\MyChat.csproj",
+  "projectFilePath": "D:\\MyMessengerJava\\JCore\\MyChat\\MyChat.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\avalonia\\11.3.11\\avalonia.11.3.11.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.25547.20250602\\avalonia.angle.windows.natives.2.1.25547.20250602.nupkg.sha512",

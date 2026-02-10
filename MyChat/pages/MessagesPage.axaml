@@ -9,13 +9,12 @@
                 <!-- Верхняя панель -->
                 <DockPanel Grid.Row="0" Margin="0,0,0,10">
                         <Button Content="Участники" DockPanel.Dock="Right"/>
-                        <TextBlock Text="Название выбранной группы" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <TextBlock Name="GroupName" Text="Название выбранной группы" VerticalAlignment="Center" FontWeight="Bold"/>
                 </DockPanel>
 
                 <!-- Список сообщений -->
-                <ListBox Grid.Row="1" Background="#F0F0F0">
-                        <ListBoxItem Content="Привет! Как дела?"/>
-                        <ListBoxItem Content="Все отлично, пишу на Avalonia!"/>
+                <ListBox x:Name="MessageContainer" Grid.Row="1" Background="#F0F0F0">
+                        
                 </ListBox>
 
                 <!-- Поле ввода -->

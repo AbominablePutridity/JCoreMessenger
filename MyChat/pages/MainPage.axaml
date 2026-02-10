@@ -16,8 +16,8 @@
                                 <StackPanel x:Name="ChatContainer" Spacing="2" Margin="5" />
                         </ScrollViewer>
 
-                        <Button x:Name="PagNextBtn" Grid.Row="2" Grid.Column="0" Content= "След." VerticalAlignment="Bottom"/>
-                        <Button x:Name="PagPrevBtn" Grid.Row="2" Grid.Column="1" Content= "Пред." VerticalAlignment="Bottom"/>
+                        <Button x:Name="PagNextBtn" Grid.Row="2" Grid.Column="0" Content= "След." VerticalAlignment="Bottom" Click="Pag_Next_Btn"/>
+                        <Button x:Name="PagPrevBtn" Grid.Row="2" Grid.Column="1" Content= "Пред." VerticalAlignment="Bottom" Click="Pag_Prev_Btn"/>
                 </Grid>
 
                 <!-- Правая колонка: Окно сообщений -->
