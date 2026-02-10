@@ -34,9 +34,15 @@ public class MessageRepository extends Repository<Message, Message> {
         // Запрос сработает в БД, но данные в Java не попадут
         ResultSet data = super.getEntity().executeSQL(
                 """
-                SELECT m.*
+                SELECT m.id,
+                m.description,
+                m.date,
+                p.name,
+                p.surname,
+                p.identityCode
                 FROM message m
                 INNER JOIN personchannel pc_author ON m.personchannelid = pc_author.id
+                JOIN person p ON pc_author.personid = p.id
                 WHERE pc_author.channelid = ?  -- Сообщения этого канала
                   AND EXISTS (                 -- Условие: пользоатнль должен быть участником этого канала
                       SELECT 1 
