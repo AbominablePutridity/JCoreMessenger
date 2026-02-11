@@ -35,11 +35,16 @@ public class MessageRepository extends Repository<Message, Message> {
         ResultSet data = super.getEntity().executeSQL(
                 """
                 SELECT m.id,
-                m.description,
-                m.date,
-                p.name,
-                p.surname,
-                p.identityCode
+                    m.description,
+                    m.date,
+                    p.name,
+                    p.surname,
+                    p.identityCode,
+                CASE
+                    WHEN pc_author.personid = ?
+                    THEN true
+                    ELSE false
+                END AS is_own
                 FROM message m
                 INNER JOIN personchannel pc_author ON m.personchannelid = pc_author.id
                 JOIN person p ON pc_author.personid = p.id
@@ -56,6 +61,7 @@ public class MessageRepository extends Repository<Message, Message> {
                 """,
                 new Object[]
                 {
+                    personId,
                     channelId,
                     channelId,
                     personId,
