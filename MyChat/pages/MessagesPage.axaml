@@ -19,8 +19,8 @@
 
                 <!-- Поле ввода -->
                 <Grid Grid.Row="2" ColumnDefinitions="*, Auto" Margin="0,10,0,0">
-                        <TextBox Grid.Column="0" Watermark="Введите сообщение..."/>
-                        <Button Grid.Column="1" Content="Отправить" Margin="5,0,0,0"/>
+                        <TextBox x:Name="messageText" Grid.Column="0" Watermark="Введите сообщение..."/>
+                        <Button Grid.Column="1" Content="Отправить" Margin="5,0,0,0" Click="Send_Message_Btn"/>
                 </Grid>
         </Grid>
 </UserControl>

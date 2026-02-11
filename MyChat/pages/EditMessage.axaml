@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MyChat.pages.EditMessage">
+
+        <Grid>
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>   <!-- Кнопка назад -->
+                        <RowDefinition Height="*"/>      <!-- Контент по центру -->
+                </Grid.RowDefinitions>
+
+                <!-- Кнопка назад -->
+                <Button Grid.Row="0"
+                        Margin="10"
+                        Width="80"
+                        Height="30"
+                        HorizontalAlignment="Left"
+                        Content="Назад"
+                        Click="Back_Btn"/>
+
+                <!-- Контент по центру -->
+                <Viewbox Grid.Row="1"
+                        Stretch="Uniform"
+                        MaxWidth="800"
+                        MaxHeight="600"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                
+                <Border Padding="20">
+                        <StackPanel Width="400"
+                                Spacing="15"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        
+                        <!-- Поле ввода -->
+                        <TextBox x:Name="EditTextBox"
+                                Height="150"
+                                AcceptsReturn="True"
+                                TextWrapping="Wrap"/>
+                        
+                        <!-- Кнопки -->
+                        <Grid>
+                                <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Button Grid.Column="0"
+                                        Margin="0,0,5,0"
+                                        Height="35"
+                                        Content="Удалить"
+                                        HorizontalAlignment="Stretch"
+                                        Click="Delete_Btn"/>
+                                
+                                <Button Grid.Column="1"
+                                        Margin="5,0,0,0"
+                                        Height="35"
+                                        Content="Сохранить"
+                                        HorizontalAlignment="Stretch"
+                                        Click="Save_Btn"/>
+                        </Grid>
+                        </StackPanel>
+                </Border>
+                </Viewbox>
+        </Grid>
+</UserControl>

@@ -14,6 +14,7 @@ class Client
     public static string password;
 
     public static ContentControl contentControl;
+    public static ContentControl messageContent;
 
     public static string initializeSecurity()
     {

@@ -20,7 +20,8 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             InitializeComponent();
 
             // загружаем страницу сообщений справа
-            MainContent.Content = new MessagesPage("", "Название группы");
+            Client.messageContent = MainContent;
+            Client.messageContent.Content = new MessagesPage("", "Название группы");
 
             // загружаем список всех групп на первой странице слева
             getChannelsData("");
@@ -97,7 +98,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             // Здесь логика получения сообщений для конкретной группы
             Debug.WriteLine("selectedGroup => " + groupId);
 
-            MainContent.Content = new MessagesPage(groupId, groupName);
+            Client.messageContent.Content = new MessagesPage(groupId, groupName);
         }
     }
 }

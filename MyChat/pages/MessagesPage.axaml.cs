@@ -7,7 +7,9 @@ using System.Text.Json;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
 using Avalonia.Media;
+using MyChat.pages;
 
 
 namespace MyChat.pages // ДОБАВЬТЕ .pages
@@ -50,10 +52,20 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                 {
                     //MessageContainer.Items.Add("|"+item["identitycode"] + " " + item["surname"] + " " + item["name"] + "| \n" + item["description"] + "\n" + "\t" + item["date"] + " ");
 
-                    // Создаем Border для стилизации
+                    SolidColorBrush backgroundColor = new SolidColorBrush(Colors.LightGray);
+                    HorizontalAlignment horizontalAlignment = Avalonia.Layout.HorizontalAlignment.Left;
+
+                    if(item["is_own"].ToString().Trim().Equals("True"))
+                    {
+                        backgroundColor = new SolidColorBrush(Colors.LightGreen);
+                        horizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right;
+                    }
+
+                    /* Создаем Border для стилизации итемов сообщений
+                    (но Border не имеет свойства Tag для задания данных, поэтому требуется его обернуть в ContentControl, который имеет это свойство)*/
                     var border = new Border
                     {
-                        Background = new SolidColorBrush(Colors.LightGray),
+                        Background = backgroundColor,
                         CornerRadius = new CornerRadius(10),
                         Margin = new Thickness(0, 5, 0, 5),
                         Padding = new Thickness(15, 10),
@@ -62,12 +74,40 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                             Text = $"|{item["identitycode"]} {item["surname"]} {item["name"]}| \n{item["description"]}\n\t{item["date"]}",
                             TextWrapping = TextWrapping.Wrap,
                             FontSize = 15
-                        }
+                        },
+                        HorizontalAlignment = horizontalAlignment
+                    };
+
+                    // обарачиваем Border в ContentControl для задания свойства Tag
+                    var contentControl = new ContentControl
+                    {
+                        Content = border,
+                        Tag = (id: item["id"].ToString(), is_own: item["is_own"].ToString()), // Теперь есть Tag!
                     };
                     
-                    MessageContainer.Items.Add(border);
+                    // добавляем новый item со стилем в ListBox сообщений
+                    MessageContainer.Items.Add(contentControl);
+
+                    // Добавляем обработчик PointerPressed (тапа/клика), если это - сообщение текущего пользователя
+                    if(item["is_own"].ToString().Trim().Equals("True"))
+                    {
+                        border.PointerPressed += (sender, e) =>
+                        {
+                            //передача аргументов из Tag текущего item на следующую страницу (страницу редактирования сообщения)
+                            Client.messageContent.Content = new EditMessage(item["description"].ToString(), item["id"].ToString());
+                        };
+                    }
                 }
             }
+        }
+
+        public void Send_Message_Btn(object sender, RoutedEventArgs e)
+        {
+            string url = "MessageController/createMessageInChannel<endl>" + IdChannel + "<endl>" + messageText.Text;
+
+            string response = Client.getData(url);
+
+            showMessagesByChannelId();
         }
     }
 }
