@@ -16,15 +16,16 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 {
     public partial class MessagesPage : UserControl
     {
-        private string IdChannel;
-        private string groupName;
+        public static string IdChannel = "";
+        public static string groupName = "Название группы";
+        public static int page = 0;
 
         public MessagesPage(string IdChannel, String groupName)
         {
             InitializeComponent();
 
-            this.IdChannel = IdChannel;
-            this.groupName = groupName;
+            MessagesPage.IdChannel = IdChannel;
+            MessagesPage.groupName = groupName;
             
             showMessagesByChannelId();
         }
@@ -36,7 +37,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             if(!IdChannel.Equals(""))
             {
                 // 0. формируем url для получения данных по нему от сервера
-                string url = "MessageController/getMessagesFromMyChannelAction<endl>" + IdChannel + "<endl>0<endl>100";
+                string url = "MessageController/getMessagesFromMyChannelAction<endl>" + IdChannel + "<endl>" + page + "<endl>100";
 
                 // 1. получаем данные в формате json-строки от сервера
                 string response = Client.getData(url);
@@ -108,6 +109,28 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             string response = Client.getData(url);
 
             showMessagesByChannelId();
+        }
+
+        public void Members_Btn(object sender, RoutedEventArgs e)
+        {
+            Client.messageContent.Content = new EditMembers();
+        }
+
+        public void Pag_Next_Btn(object sender, RoutedEventArgs e)
+        {
+            page = page + 1;
+
+            showMessagesByChannelId();
+        }
+
+        public void Pag_Prev_Btn(object sender, RoutedEventArgs e)
+        {
+            if(page > 0)
+            {
+                page = page - 1;
+
+                showMessagesByChannelId();
+            }
         }
     }
 }

@@ -28,41 +28,41 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                 
-                <Border Padding="20">
-                        <StackPanel Width="400"
-                                Spacing="15"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                        
-                        <!-- Поле ввода -->
-                        <TextBox x:Name="EditTextBox"
-                                Height="150"
-                                AcceptsReturn="True"
-                                TextWrapping="Wrap"/>
-                        
-                        <!-- Кнопки -->
-                        <Grid>
-                                <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                        <Border Padding="20">
+                                <StackPanel Width="400"
+                                        Spacing="15"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
                                 
-                                <Button Grid.Column="0"
-                                        Margin="0,0,5,0"
-                                        Height="35"
-                                        Content="Удалить"
-                                        HorizontalAlignment="Stretch"
-                                        Click="Delete_Btn"/>
+                                <!-- Поле ввода -->
+                                <TextBox x:Name="EditTextBox"
+                                        Height="150"
+                                        AcceptsReturn="True"
+                                        TextWrapping="Wrap"/>
                                 
-                                <Button Grid.Column="1"
-                                        Margin="5,0,0,0"
-                                        Height="35"
-                                        Content="Сохранить"
-                                        HorizontalAlignment="Stretch"
-                                        Click="Save_Btn"/>
-                        </Grid>
-                        </StackPanel>
-                </Border>
+                                        <!-- Кнопки -->
+                                        <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <Button Grid.Column="0"
+                                                        Margin="0,0,5,0"
+                                                        Height="35"
+                                                        Content="Удалить"
+                                                        HorizontalAlignment="Stretch"
+                                                        Click="Delete_Btn"/>
+                                                
+                                                <Button Grid.Column="1"
+                                                        Margin="5,0,0,0"
+                                                        Height="35"
+                                                        Content="Сохранить"
+                                                        HorizontalAlignment="Stretch"
+                                                        Click="Save_Btn"/>
+                                        </Grid>
+                                </StackPanel>
+                        </Border>
                 </Viewbox>
         </Grid>
 </UserControl>
