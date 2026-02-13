@@ -108,7 +108,8 @@ public class ConfigDI {
         );
         
         ContainerDI.register(PersonController.class, new PersonController(
-                ContainerDI.getBean(Statement.class)
+                ContainerDI.getBean(Statement.class),
+                ContainerDI.getBean(PersonService.class)
             )
         );
     }

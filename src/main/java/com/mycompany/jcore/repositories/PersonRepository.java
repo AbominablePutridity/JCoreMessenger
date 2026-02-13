@@ -39,4 +39,53 @@ public class PersonRepository extends Repository<Person, Person>{
         
         return data;
     }
+    
+    /**
+     * Взять всех персон, которые состоят в определенном канале, в котором состоит текущий пользователь
+     * @param personId id текущей персоны
+     * @param channelId id канала вывода персон
+     * @param page страница
+     * @param size количество элементов на странице
+     * @return
+     * @throws SQLException 
+     */
+    public ResultSet getPersonsByChannel(long personId, long channelId, long page, long size) throws SQLException
+    {
+         ResultSet data = super.getEntity().executeSQL(
+                """
+                SELECT 
+                    p.id,
+                    p.identitycode,
+                    p.name,
+                    p.surname
+                FROM Person p
+                WHERE 
+                    -- Сначала проверяем, что пользователь 1 состоит в канале 1
+                    EXISTS (
+                        SELECT 1 
+                        FROM personchannel pc 
+                        WHERE pc.personid = ? 
+                          AND pc.channelid = ?
+                    )
+                    -- Затем выводим всех участников канала
+                    AND EXISTS (
+                        SELECT 1 
+                        FROM personchannel pc 
+                        WHERE pc.personid = p.id 
+                          AND pc.channelid = ?
+                    )
+                LIMIT ? OFFSET ?
+                """,
+                new Object[]
+                {
+                    personId,
+                    channelId,
+                    channelId,
+                    size,
+                    (page * size)
+                }
+        );
+        
+        return data;
+    }
 }

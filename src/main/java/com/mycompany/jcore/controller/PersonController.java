@@ -2,6 +2,7 @@ package com.mycompany.jcore.controller;
 
 import com.mycompany.jcore.repositories.PersonRepository;
 import com.mycompany.jcore.service.PersonService;
+import java.sql.SQLException;
 import java.sql.Statement;
 import vendor.Security.Security;
 
@@ -12,8 +13,9 @@ import vendor.Security.Security;
 public class PersonController extends Security {
     public PersonService personService;
     
-    public PersonController(Statement statement) {
+    public PersonController(Statement statement, PersonService personService) {
         super(statement);
+        this.personService = personService;
     }
     
     /* telnet 127.0.0.1 8082
@@ -36,5 +38,56 @@ public class PersonController extends Security {
         } else {
             return false;
         }
+    }
+    
+    /**
+     * Взятие членов канала, если текущий пользователь состоит в данном канале.
+     * 
+     * PersonController/getMembersByChannel<endl>1<endl>0<endl>50<endl>ivanov<security>password123<endl>
+     * params[0] - channelId
+     * params[1] - page
+     * params[2] - size
+     * params[3] - Security
+     * 
+     * @param params
+     * @return true - если логин и пароль совпадают
+     */
+    public String getMembersByChannel(String[] params) throws SQLException
+    {
+        String result = "";
+        
+//        for(String param : params)
+//        {
+//            result += "param is -> " + param + "\r\n";
+//            System.out.println("param is -> " + param);
+//        }
+        
+        if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
+            
+            try {
+                //берем логин, page и size из параметров
+                long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
+                long channelId = Long.parseLong(params[0]);
+                long page = Long.parseLong(params[1]);
+                long size = Long.parseLong(params[2]);
+                
+                System.out.println("p0 = " + channelId + ", p1 = " + channelId + ", p2 = " + page + ", p3 = " + size);
+
+                result = personService.getAllPersonsByChannel(
+                        personId,
+                        channelId,
+                        page,
+                        size
+                );
+
+                
+            } catch (SQLException e) {
+                return "ОШИБКА ВЫПОЛНЕНИЯ: " + e.getMessage();
+            }
+        } else {
+            return super.returnException();
+        }
+        
+        return result;
     }
 }
