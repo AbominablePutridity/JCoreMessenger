@@ -34,7 +34,13 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         {
             query = 
                 """
-                SELECT channel.id, channel.name FROM channel
+                SELECT channel.id, channel.name,
+                    CASE
+                        WHEN channel.personid = ?
+                        THEN true
+                        ELSE false
+                    END AS is_own
+                FROM channel
                 INNER JOIN personchannel pc ON channel.id = pc.channelid
                 INNER JOIN person p ON pc.personid = p.id
                 WHERE p.id = ? AND channel.name LIKE ?
@@ -45,6 +51,7 @@ public class ChannelRepository extends Repository<Channel, Channel> {
                 new Object[]
                 {
                     personId,
+                    personId,
                     "%" + search + "%",
                     size,
                     (page * size)
@@ -52,7 +59,13 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         } else {
             query = 
                 """
-                SELECT channel.id, channel.name FROM channel
+                SELECT channel.id, channel.name,
+                    CASE
+                        WHEN channel.personid = ?
+                        THEN true
+                        ELSE false
+                    END AS is_own
+                FROM channel
                 INNER JOIN personchannel pc ON channel.id = pc.channelid
                 INNER JOIN person p ON pc.personid = p.id
                 WHERE p.id = ?
@@ -62,6 +75,7 @@ public class ChannelRepository extends Repository<Channel, Channel> {
             paramsToQuery =
                 new Object[]
                 {
+                    personId,
                     personId,
                     size,
                     (page * size)
