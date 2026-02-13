@@ -21,7 +21,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
             // загружаем страницу сообщений справа
             Client.messageContent = MainContent;
-            Client.messageContent.Content = new MessagesPage("", "Название группы");
+            Client.messageContent.Content = new MessagesPage("", "Название группы", false);
 
             // загружаем список всех групп на первой странице слева
             getChannelsData("");
@@ -85,7 +85,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                 {
                     // Этот код сработает при нажатии
                     string id = btn.Tag.ToString();
-                    LoadMessages(id, item["name"].ToString()); // Твой метод загрузки сообщений
+                    LoadMessages(id, item["name"].ToString(), bool.Parse(item["is_own"].ToString().Trim())); // Твой метод загрузки сообщений
                 };
 
                 // 3. Добавляем кнопку в наш StackPanel
@@ -93,12 +93,12 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             }
         }
 
-        private void LoadMessages(string groupId, String groupName)
+        private void LoadMessages(string groupId, String groupName, bool isOwn)
         {
             // Здесь логика получения сообщений для конкретной группы
             Debug.WriteLine("selectedGroup => " + groupId);
 
-            Client.messageContent.Content = new MessagesPage(groupId, groupName);
+            Client.messageContent.Content = new MessagesPage(groupId, groupName, isOwn);
         }
     }
 }

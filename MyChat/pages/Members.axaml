@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="MyChat.pages.Members">
+
+        <Grid>
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>   <!-- Для кнопки "Назад" -->
+                        <RowDefinition Height="*"/>      <!-- Для ListBox -->
+                        <RowDefinition Height="Auto"/>   <!-- Для кнопок навигации -->
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Кнопка "Назад" в первой строке, левый верхний угол -->
+                <Button Grid.Row="0" 
+                        Grid.Column="0"
+                        Content="Назад" 
+                        Margin="5" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Top"
+                        Click="Back_Btn"/>
+
+                <!-- ListBox занимает всю вторую строку и обе колонки -->
+                <ListBox Grid.Row="1" 
+                        Grid.ColumnSpan="2"
+                        x:Name="MembersList" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        Margin="5"/>
+
+                <!-- Кнопка "Пред." в третьей строке, левая колонка -->
+                <Button Grid.Row="2" 
+                        Grid.Column="0"
+                        Content="Пред." 
+                        Margin="5" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Bottom"/>
+
+                <!-- Кнопка "След." в третьей строке, правая колонка -->
+                <Button Grid.Row="2" 
+                        Grid.Column="1"
+                        Content="След." 
+                        Margin="5" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Bottom"/>
+        </Grid>
+</UserControl>

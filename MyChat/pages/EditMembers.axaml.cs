@@ -16,11 +16,15 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 {
     public partial class EditMembers : UserControl
     {
-        private string IdChannel;
+        private string idChannel;
 
-        public EditMembers()
+        public EditMembers(string idChannel)
         {
             InitializeComponent();
+
+            this.idChannel = idChannel;
+
+            MembersContent.Content = new Members(idChannel);
         }
     }
 }

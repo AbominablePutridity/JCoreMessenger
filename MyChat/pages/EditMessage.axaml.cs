@@ -34,12 +34,12 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
         {
             string response = Client.getData("MessageController/updateMessageInChannel<endl>" + messageId + "<endl>" + EditTextBox.Text);
 
-            Client.messageContent.Content = new MessagesPage(MessagesPage.IdChannel, MessagesPage.groupName);
+            Client.messageContent.Content = new MessagesPage(MessagesPage.IdChannel, MessagesPage.groupName, MessagesPage.isOwn);
         }
 
         public void Back_Btn(object sender, RoutedEventArgs e)
         {
-            Client.messageContent.Content = new MessagesPage(MessagesPage.IdChannel, MessagesPage.groupName);
+            Client.messageContent.Content = new MessagesPage(MessagesPage.IdChannel, MessagesPage.groupName, MessagesPage.isOwn);
         }
 
         public void Delete_Btn(object sender, RoutedEventArgs e)
@@ -47,7 +47,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             //MessageController/deleteMessageInChannel<endl>1<endl>ivanov<security>password123<endl>
             string response = Client.getData("MessageController/deleteMessageInChannel<endl>" + messageId);
 
-            Client.messageContent.Content = new MessagesPage(MessagesPage.IdChannel, MessagesPage.groupName);
+            Client.messageContent.Content = new MessagesPage(MessagesPage.IdChannel, MessagesPage.groupName, MessagesPage.isOwn);
         }
     }
 }

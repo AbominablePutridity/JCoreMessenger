@@ -18,14 +18,16 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
     {
         public static string IdChannel = "";
         public static string groupName = "Название группы";
-        public static int page = 0;
+        private int page = 0;
+        public static bool isOwn = false;
 
-        public MessagesPage(string IdChannel, String groupName)
+        public MessagesPage(string IdChannel, String groupName, bool isOwn)
         {
             InitializeComponent();
 
             MessagesPage.IdChannel = IdChannel;
             MessagesPage.groupName = groupName;
+            MessagesPage.isOwn = isOwn;
             
             showMessagesByChannelId();
         }
@@ -113,7 +115,12 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
         public void Members_Btn(object sender, RoutedEventArgs e)
         {
-            Client.messageContent.Content = new EditMembers();
+            if(isOwn) { // если текущий пользователь - автор данного канала
+                Client.messageContent.Content = new EditMembers(IdChannel); // разрешаем открывать панель редактирования участников канала
+            } else
+            {
+                Client.messageContent.Content = new Members(IdChannel); // иначе загружаем страницу с просмотром всех пользователей канала без возможности его редактирования
+            }
         }
 
         public void Pag_Next_Btn(object sender, RoutedEventArgs e)
