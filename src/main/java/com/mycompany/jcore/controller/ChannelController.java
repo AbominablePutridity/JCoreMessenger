@@ -127,7 +127,7 @@ public class ChannelController extends Security {
             try {
                 long personId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
                 long channelId = Long.parseLong(params[0]);
-           
+                
                 result = channelService.deleteChannel(channelId, personId);
                 
                 return "201 - успешное выполнение: удалено - " + result;

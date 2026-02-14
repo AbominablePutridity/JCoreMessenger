@@ -71,8 +71,8 @@ public class ChannelService {
      * @throws SQLException 
      */
     public long deleteChannel(long channelId, long personId) throws SQLException
-    {
-        return channelRepository.deleteChannelByIdWithPersonId(channelId, channelId);
+    {        
+        return channelRepository.deleteChannelByIdWithPersonId(channelId, personId);
     }
     
     /**
