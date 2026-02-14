@@ -14,7 +14,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
     {
         private string idChannel;
         int page = 0;
-        int size = 50;
+        int size = 20;
 
         public Members(string idChannel)
         {
@@ -52,6 +52,23 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
         public void Back_Btn(object sender, RoutedEventArgs e)
         {
             Client.messageContent.Content = new MessagesPage(MessagesPage.IdChannel, MessagesPage.groupName, MessagesPage.isOwn);
+        }
+
+        public void Pag_Next_Btn(object sender, RoutedEventArgs e)
+        {
+            page = page + 1;
+
+            getAllMembersByChannel();
+        }
+
+        public void Pag_Prev_Btn(object sender, RoutedEventArgs e)
+        {
+            if(page > 0)
+            {
+                page = page - 1;
+
+                getAllMembersByChannel();
+            }
         }
     }
 }

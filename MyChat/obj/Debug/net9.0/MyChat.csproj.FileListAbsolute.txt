@@ -1,3 +1,10 @@
+d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.csproj.AssemblyReference.cache
+d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\Avalonia\Resources.Inputs.cache
+d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\Avalonia\resources
+d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.GeneratedMSBuildEditorConfig.editorconfig
+d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.AssemblyInfoInputs.cache
+d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.AssemblyInfo.cs
+d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.csproj.CoreCompileInputs.cache
 d:\AvaloniaProjects\MyChat\bin\Debug\net9.0\MyChat.exe
 D:\AvaloniaProjects\MyChat\bin\Debug\net9.0\MyChat.deps.json
 D:\AvaloniaProjects\MyChat\bin\Debug\net9.0\MyChat.runtimeconfig.json
@@ -58,13 +65,6 @@ d:\AvaloniaProjects\MyChat\bin\Debug\net9.0\runtimes\osx\native\libSkiaSharp.dyl
 d:\AvaloniaProjects\MyChat\bin\Debug\net9.0\runtimes\win-arm64\native\libSkiaSharp.dll
 d:\AvaloniaProjects\MyChat\bin\Debug\net9.0\runtimes\win-x64\native\libSkiaSharp.dll
 d:\AvaloniaProjects\MyChat\bin\Debug\net9.0\runtimes\win-x86\native\libSkiaSharp.dll
-d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.csproj.AssemblyReference.cache
-d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\Avalonia\Resources.Inputs.cache
-d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\Avalonia\resources
-d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.GeneratedMSBuildEditorConfig.editorconfig
-d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.AssemblyInfoInputs.cache
-d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.AssemblyInfo.cs
-d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.csproj.CoreCompileInputs.cache
 D:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.csproj.Up2Date
 d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\MyChat.dll
 d:\AvaloniaProjects\MyChat\obj\Debug\net9.0\refint\MyChat.dll

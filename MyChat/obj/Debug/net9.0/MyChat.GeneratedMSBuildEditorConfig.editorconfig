@@ -27,6 +27,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [d:/AvaloniaProjects/MyChat/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[d:/AvaloniaProjects/MyChat/pages/Channels.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [d:/AvaloniaProjects/MyChat/pages/EditMembers.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

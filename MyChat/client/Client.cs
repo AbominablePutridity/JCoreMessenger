@@ -15,6 +15,7 @@ class Client
 
     public static ContentControl contentControl;
     public static ContentControl messageContent;
+    public static ContentControl channelContent;
 
     public static string initializeSecurity()
     {

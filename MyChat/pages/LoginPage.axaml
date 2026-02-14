@@ -13,7 +13,7 @@
             
             <TextBox x:Name="PasswordTextBox" Watermark="Пароль" PasswordChar="*"/>
             
-            <Button x:Name="ConfirmButton" Content="Подтвердить" HorizontalAlignment="Stretch" Click="Button_Click"/>
+            <Button x:Name="ConfirmButton" Content="Подтвердить" HorizontalAlignment="Stretch" Click="Button_Click" Classes="send"/>
         </StackPanel>
     </Grid>
 </UserControl>

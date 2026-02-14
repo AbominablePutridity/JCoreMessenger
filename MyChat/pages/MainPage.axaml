@@ -7,18 +7,7 @@
 
         <Grid ColumnDefinitions="250, *">
                 <!-- Левая колонка: Список чатов -->
-                <Grid  Grid.Column="0" RowDefinitions="Auto, *" ColumnDefinitions="*,Auto">
-                        <TextBox x:Name="SearchField" Grid.Row="0" Grid.Column="0" Watermark="Поиск групп..." Margin="5"/>
-                        <Button x:Name="SearchBtn" Grid.Row="0" Grid.Column="1" Content= "Поиск" Click="Search_Button_Click"/>
-                        
-                        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                                <!-- Сюда будем добавлять кнопки из кода -->
-                                <StackPanel x:Name="ChatContainer" Spacing="2" Margin="5" />
-                        </ScrollViewer>
-
-                        <Button x:Name="PagNextBtn" Grid.Row="2" Grid.Column="0" Content= "След." VerticalAlignment="Bottom" Click="Pag_Next_Btn"/>
-                        <Button x:Name="PagPrevBtn" Grid.Row="2" Grid.Column="1" Content= "Пред." VerticalAlignment="Bottom" Click="Pag_Prev_Btn"/>
-                </Grid>
+                <ContentControl Grid.Column="0" Grid.Row="0" x:Name="ChannelContent" />
 
                 <!-- Правая колонка: Окно сообщений -->
                 <ContentControl Grid.Column="1" Grid.Row="0" x:Name="MainContent" />

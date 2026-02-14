@@ -6,5 +6,46 @@
 
     <Application.Styles>
         <FluentTheme />
+
+        <!-- Стиль для всех кнопок -->
+        <Style Selector="Button">
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Background" Value="#e0e0e0"/>
+        </Style>
+
+        <Style Selector="Button.delete">
+            <Setter Property="Background" Value="#FF6347"/>
+        </Style>
+
+        <Style Selector="Button.send">
+            <Setter Property="Background" Value="LightGreen"/>
+        </Style>
+
+        <!-- Стиль для всех текстовых полей -->
+        <Style Selector="TextBox">
+            <Setter Property="CornerRadius" Value="20"/>
+        </Style>
+
+        <!-- Стиль для всех списков -->
+        <Style Selector="ListBox">
+            <Setter Property="CornerRadius" Value="20"/>
+        </Style>
+
+        <!-- Глобальный стиль для всех ListBox -->
+        <Style Selector="ListBox">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush Source="avares://MyChat/assets/grass.png" 
+                                Stretch="UniformToFill"
+                                Opacity="0.3"/>
+                </Setter.Value>
+            </Setter>
+
+            <!-- Серая обводка -->
+            <Setter Property="BorderBrush" Value="#c0c0c0"/>  <!-- Серый -->
+            <Setter Property="BorderThickness" Value="1"/>    <!-- Толщина обводки -->
+            <Setter Property="CornerRadius" Value="10"/>       <!-- Скругление углов (опционально) -->
+        </Style>
+        
     </Application.Styles>
 </Application>

@@ -13,7 +13,7 @@
                 </DockPanel>
 
                 <!-- Список сообщений -->
-                <ListBox x:Name="MessageContainer" Grid.Row="1" Background="#F0F0F0">
+                <ListBox x:Name="MessageContainer" Grid.Row="1">
                         
                 </ListBox>
 
@@ -23,7 +23,7 @@
                 <!-- Поле ввода -->
                 <Grid Grid.Row="3" ColumnDefinitions="*, Auto" Margin="0,10,0,0">
                         <TextBox x:Name="messageText" Grid.Column="0" Watermark="Введите сообщение..."/>
-                        <Button Grid.Column="1" Content="Отправить" Margin="5,0,0,0" Click="Send_Message_Btn"/>
+                        <Button Grid.Column="1" Content="Отправить" Margin="5,0,0,0" Click="Send_Message_Btn" Classes="send"/>
                 </Grid>
         </Grid>
 </UserControl>

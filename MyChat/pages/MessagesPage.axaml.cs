@@ -101,16 +101,24 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                         };
                     }
                 }
+
+                if (MessageContainer.Items.Count - 1 > 0) {
+                    MessageContainer.ScrollIntoView(MessageContainer.Items[MessageContainer.Items.Count - 1]); //прокручиваем ListBox с сообщениями в самый конец (после вывода всех сообщений)
+                }
             }
         }
 
         public void Send_Message_Btn(object sender, RoutedEventArgs e)
         {
-            string url = "MessageController/createMessageInChannel<endl>" + IdChannel + "<endl>" + messageText.Text;
+            if(!messageText.Text.Equals("")) {
+                string url = "MessageController/createMessageInChannel<endl>" + IdChannel + "<endl>" + messageText.Text;
 
-            string response = Client.getData(url);
+                string response = Client.getData(url);
 
-            showMessagesByChannelId();
+                showMessagesByChannelId();
+
+                messageText.Text = "";
+            }
         }
 
         public void Members_Btn(object sender, RoutedEventArgs e)

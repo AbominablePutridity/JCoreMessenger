@@ -23,4 +23,10 @@
   <!-- <ItemGroup>
     <AvaloniaResource Include="pages\*.axaml" />
   </ItemGroup> -->
+
+  <!-- Папка для ресурсов -->
+  <ItemGroup>
+      <AvaloniaResource Include="assets\**\*.*" />
+  </ItemGroup>
+
 </Project>
