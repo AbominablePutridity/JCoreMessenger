@@ -26,6 +26,25 @@ public class PersonService {
     public long getPersonIdByLogin(String personLogin) throws SQLException
     {
         ResultSet rs = personRepository.getIdByPersonLogin(personLogin);
+        
+        return getIdFromResult(rs, personLogin);
+    }
+    
+    /**
+     * Взять id пользователя по его идентификационному коду.
+     * @param personIdentityCode Логин пользователя.
+     * @return id пользователя.
+     * @throws SQLException 
+     */
+    public long getPersonIdByIdentityCode(String personIdentityCode) throws SQLException
+    {
+        ResultSet rs = personRepository.getIdByPersonIdentityCode(personIdentityCode);
+        
+        return getIdFromResult(rs, personIdentityCode);
+    }
+    
+    private long getIdFromResult(ResultSet rs, String dataField) throws SQLException
+    {
         long id = -1;
         
         if (rs.next()) { // Перемещаем курсор на первую строку
@@ -36,7 +55,7 @@ public class PersonService {
         rs.close();
         
         if(id == -1){
-            System.out.println("ОШИБКА - id пользователя с логином = " + personLogin + " не найден!");
+            System.out.println("ОШИБКА - id пользователя с полем = " + dataField + " не найден!");
         }
         
         return id;

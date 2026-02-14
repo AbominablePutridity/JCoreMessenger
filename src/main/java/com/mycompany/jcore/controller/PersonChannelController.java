@@ -28,10 +28,10 @@ public class PersonChannelController extends Security {
     /**
      * Удалить персону из своей группы.
      * 
-     * PersonChannelController/deletePersonFromMyChannelAction<endl>1<endl>2<endl>ivanov<security>password123<endl>
+     * PersonChannelController/deletePersonFromMyChannelAction<endl>1<endl>ID345678<endl>ivanov<security>password123<endl>
      * 
      * params[0] - channelId
-     * params[1] - personForDeleteId
+     * params[1] - personForDelete (IdentityCode)
      * params[2] - Security 
      * 
      * @param params Параметры запроса пользователя.
@@ -41,17 +41,18 @@ public class PersonChannelController extends Security {
     {
         long result = -1;
         
+        try {
         if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
             try {
                 long authorChannelId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
-                long personForDelete = Long.parseLong(params[1]);
+                long personForDelete = personService.getPersonIdByIdentityCode(params[1]); //Long.parseLong(params[1]);
                 long channelId = Long.parseLong(params[0]);
            
                 result = personChannelService.deletePersonChannelByIdWithPersonId(
                         channelId, authorChannelId, personForDelete
                 );
                 
-                return "201 - успешное выполнение: удалено - " + result;
+                //return "201 - успешное выполнение: удалено - " + result;
             } catch (SQLException e)
             {
                 return "ОШИБКА ПРИ ОПЕРАЦИИ: " + e.getMessage();
@@ -59,15 +60,21 @@ public class PersonChannelController extends Security {
         } else {
             return "403";
         }
+        } catch (Throwable t)
+        {
+            System.out.println("ERROR-> " + t.getMessage());
+        }
+        
+        return "201 - успешное выполнение: удалено - " + result;
     }
     
     /**
      * Добавить персону из своей группы.
      * 
-     * PersonChannelController/addPersonFromMyChannelAction<endl>1<endl>2<endl>ivanov<security>password123<endl>
+     * PersonChannelController/addPersonFromMyChannelAction<endl>1<endl>ID345678<endl>ivanov<security>password123<endl>
      * 
      * params[0] - channelId
-     * params[1] - personForAddId
+     * params[1] - personForAdd (identityCode)
      * params[2] - Security 
      * 
      * @param params Параметры запроса пользователя.
@@ -80,14 +87,14 @@ public class PersonChannelController extends Security {
         if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
             try {
                 long authorChannelId = personService.getPersonIdByLogin(super.extractLoginAndPasswordFromClientQuery(params)[0]);
-                long personForAdd = Long.parseLong(params[1]);
+                long personForAdd = personService.getPersonIdByIdentityCode(params[1]); //Long.parseLong(params[1]);
                 long channelId = Long.parseLong(params[0]);
            
                 result = personChannelService.addPersonChannelByIdWithPersonId(
                         channelId, authorChannelId, personForAdd
                 );
                 
-                return "201 - успешное выполнение: удалено - " + result;
+                return "201 - успешное выполнение: добавлено - " + result;
             } catch (SQLException e)
             {
                 return "ОШИБКА ПРИ ОПЕРАЦИИ: " + e.getMessage();

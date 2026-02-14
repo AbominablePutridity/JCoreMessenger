@@ -41,6 +41,30 @@ public class PersonRepository extends Repository<Person, Person>{
     }
     
     /**
+     * Взять id пользователя по идентификационному коду из Базы Данных
+     * @param identityCode идентификационный код пользователя
+     * @return id пользователя
+     * @throws SQLException 
+     */
+    public ResultSet getIdByPersonIdentityCode(String identityCode) throws SQLException
+    {
+        ResultSet data = super.getEntity().executeSQL(
+                """
+                SELECT p.id
+                FROM Person p
+                WHERE p.identitycode = ?
+                LIMIT 1
+                """,
+                new Object[]
+                {
+                    identityCode
+                }
+        );
+        
+        return data;
+    }
+    
+    /**
      * Взять всех персон, которые состоят в определенном канале, в котором состоит текущий пользователь
      * @param personId id текущей персоны
      * @param channelId id канала вывода персон
