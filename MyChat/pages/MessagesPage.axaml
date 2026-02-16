@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MyChat.pages.MessagesPage">
 
-        <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto, Auto" Margin="5">
+        <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto, Auto" Margin="5" Classes="painted">
                 <!-- Верхняя панель -->
                 <DockPanel Grid.Row="0" Margin="0,0,0,10">
                         <Button x:Name="MembersBtn" Content="Участники" DockPanel.Dock="Right" Click="Members_Btn"/>

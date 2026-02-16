@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
 using Avalonia.Media;
+using Avalonia.Threading;
 using MyChat.pages;
 
 
@@ -16,6 +17,8 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 {
     public partial class MessagesPage : UserControl
     {
+        private DispatcherTimer _timer;
+
         public static string IdChannel = "";
         public static string groupName = "Название группы";
         private int page = 0;
@@ -30,6 +33,12 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             MessagesPage.isOwn = isOwn;
             
             showMessagesByChannelId();
+
+            // таймер на обновление сообщений каждые 5 мин (Pooling)
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromMinutes(5);
+            _timer.Tick += (s, e) => showMessagesByChannelId();
+            _timer.Start();
         }
 
         public void showMessagesByChannelId()

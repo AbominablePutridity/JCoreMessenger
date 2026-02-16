@@ -6,12 +6,15 @@ using System.Linq;
 using System.Text.Json;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 
 
 namespace MyChat.pages // ДОБАВЬТЕ .pages
 {
     public partial class Channels : UserControl
     {
+        private DispatcherTimer _timer;
+
         int page = 0;
         int size = 20;
 
@@ -21,6 +24,12 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
             // загружаем список всех групп на первой странице слева
             getChannelsData("");
+
+            // таймер на обновление чатов каждые 10 мин (Pooling)
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromMinutes(10);
+            _timer.Tick += (s, e) => getChannelsData(SearchField.Text);
+            _timer.Start();
         }
 
         public void Search_Button_Click(object sender, RoutedEventArgs e)
@@ -87,6 +96,12 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                 // 3. Добавляем кнопку в наш StackPanel
                 ChatContainer.Children.Add(btn);
             }
+        }
+
+        public void Create_Channel_Btn(object sender, RoutedEventArgs e)
+        {
+            var newWindow = new CreateChannel();
+            newWindow.Show(); // Обычное окно
         }
     }
 }
