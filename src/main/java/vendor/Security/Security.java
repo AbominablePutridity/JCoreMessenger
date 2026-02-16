@@ -122,6 +122,12 @@ public class Security {
         return hashedPassword;
     }
     
+    /**
+     * Сравнить хеш пароля с самим паролем
+     * @param cryptedPassword хешированный пароль
+     * @param password пароль без хеша
+     * @return true - если пароли совпадают, иначе false
+     */
     public static boolean checkHashedPassword(String cryptedPassword, String password) {
         BCrypt.Result result = BCrypt.verifyer()
                 .verify(password.toCharArray(), cryptedPassword);
