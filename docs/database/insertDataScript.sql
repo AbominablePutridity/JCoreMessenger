@@ -1,6 +1,6 @@
 -- Вставка данных в таблицу person
 INSERT INTO public.person (id, name, surname, login, password, role, identitycode) VALUES
-(1, 'Иван', 'Иванов', 'ivanov', 'password123', 'user', 'ID123456'),
+(1, 'Иван', 'Иванов', 'ivanov', '$2a$12$QQjrEsOggyzzjo36rBWciOebLY/.jAuR53HTrrJtgN66SDceCt9F.', 'user', 'ID123456'), -- password123
 (2, 'Мария', 'Петрова', 'petrova', 'qwerty', 'user', 'ID789012'),
 (3, 'Алексей', 'Сидоров', 'sidorov', 'pass123', 'user', 'ID345678'),
 (4, 'Елена', 'Козлова', 'kozlova', 'elena2024', 'user', 'ID901234'),

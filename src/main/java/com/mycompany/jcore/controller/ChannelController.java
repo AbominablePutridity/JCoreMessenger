@@ -53,7 +53,7 @@ public class ChannelController extends Security {
 //            result += "param is -> " + param + "\r\n";
 //            System.out.println("param is -> " + param);
 //        }
-        
+        try {
         if(super.checkRole("Person", "login", "password", "role", "user", params)) { //проверка пользователя (Security-модуль)
             
             try {
@@ -70,13 +70,18 @@ public class ChannelController extends Security {
                         size
                 );
 
-                return result;
+                //return result;
             } catch (SQLException e) {
                 return "ОШИБКА ВЫПОЛНЕНИЯ: " + e.getMessage();
             }
         } else {
             return super.returnException();
         }
+        } catch (Throwable t)
+        {
+            System.out.println("ERRORS-> " + t.getMessage());
+        }
+        return result;
     }
     
     /**
