@@ -27,25 +27,30 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
         public void getAllMembersByChannel()
         {
-            // 0. формируем url для получения данных по нему от сервера
-            string url = "PersonController/getMembersByChannel<endl>" + idChannel + "<endl>" + page + "<endl>" + size;
+            try {
+                // 0. формируем url для получения данных по нему от сервера
+                string url = "PersonController/getMembersByChannel<endl>" + idChannel + "<endl>" + page + "<endl>" + size;
 
-            // 1. получаем данные в формате json-строки от сервера
-            string response = Client.getData(url);
+                // 1. получаем данные в формате json-строки от сервера
+                string response = Client.getData(url);
 
-            
+                
 
-            // Парсим JSON в список словарей
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var data = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response, options);
+                // Парсим JSON в список словарей
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var data = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response, options);
 
-            // Очищаем старых персон перед добавлением новых
-            MembersList.Items.Clear();
+                // Очищаем старых персон перед добавлением новых
+                MembersList.Items.Clear();
 
-            // перебираем каждый элемент из листа и создаем элемент с данными из этого листа
-            foreach (var item in data)
+                // перебираем каждый элемент из листа и создаем элемент с данными из этого листа
+                foreach (var item in data)
+                {
+                    MembersList.Items.Add(item["identitycode"] + "\n" + item["surname"] + " " + item["name"]);
+                }
+            } catch (Exception e)
             {
-                MembersList.Items.Add(item["identitycode"] + "\n" + item["surname"] + " " + item["name"]);
+                Debug.WriteLine("ERROR - " + e);
             }
         }
 

@@ -9,7 +9,7 @@ using Avalonia.Interactivity;
 using Avalonia.Threading;
 
 
-namespace MyChat.pages // ДОБАВЬТЕ .pages
+namespace MyChat.pages
 {
     public partial class Channels : UserControl
     {
