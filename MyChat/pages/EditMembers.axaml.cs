@@ -43,14 +43,14 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
         public void Add_Member_Btn(object sender, RoutedEventArgs e)
         {
-            if(!DeleteField.Text.Equals("")) {
-                string url = "PersonChannelController/addPersonFromMyChannelAction<endl>" + idChannel + "<endl>" + DeleteField.Text;
+            if(!AddField.Text.Equals("")) {
+                string url = "PersonChannelController/addPersonFromMyChannelAction<endl>" + idChannel + "<endl>" + AddField.Text;
 
                 string response = Client.getData(url);
 
                 MembersContent.Content = new Members(idChannel);
 
-                DeleteField.Text = "";
+                AddField.Text = "";
             }
         }
 
