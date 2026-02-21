@@ -25,9 +25,9 @@ namespace MyChat.pages
             // загружаем список всех групп на первой странице слева
             getChannelsData("");
 
-            // таймер на обновление чатов каждые 10 мин (Pooling)
+            // таймер на обновление чатов каждые 5 мин (Pooling)
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMinutes(10);
+            _timer.Interval = TimeSpan.FromMinutes(5);
             _timer.Tick += (s, e) => getChannelsData(SearchField.Text);
             _timer.Start();
         }

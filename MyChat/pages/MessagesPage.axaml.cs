@@ -22,6 +22,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 {
     public partial class MessagesPage : UserControl
     {
+        string lastResponse = string.Empty;
         private DispatcherTimer _timer;
         private string? base64Image;
 
@@ -38,30 +39,94 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             MessagesPage.groupName = groupName;
             MessagesPage.isOwn = isOwn;
             
-            showMessagesByChannelId();
+            getDataForRefreshing();
 
-            // таймер на обновление сообщений каждые 5 мин (Pooling)
+            // таймер на обновление сообщений каждые пол минуты (Pooling)
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMinutes(5);
-            _timer.Tick += (s, e) => showMessagesByChannelId();
+            _timer.Interval = TimeSpan.FromMinutes(0.5);
+            _timer.Tick += (s, e) => getDataForRefreshing(); //showMessagesByChannelId(urlForGetMessages());
             _timer.Start();
         }
 
-        public void showMessagesByChannelId()
+        /*
+            Метод, обновляющий данные сообщений на странице сообщений, только если
+            в новом ответе (обновляющемся каждые 5 минут), появилась новая запись
+            - тоесть, старый ответ не совпадает с новым
+        */
+        public void getDataForRefreshing()
+        {
+            //0. формируем url для получения данных по нему от сервера
+            string url = "MessageController/getMessagesFromMyChannelAction<endl>" + IdChannel + "<endl>" + page + "<endl>100";
+
+            if(string.IsNullOrEmpty(lastResponse)) { //если строка с ответом изначально пуста - просто обновляем данные
+                // 1. получаем данные в формате json-строки от сервера
+                lastResponse = Client.getData(url);
+
+                showMessagesByChannelId(lastResponse);
+                //getDataForRefreshing();
+            } else //иначе сравниваем строки ответов (предыдущего и нового), и если они неравные - обновляем данные сообщений исохраняем состояние последнего ответа
+            {
+                string newResponse = Client.getData(url);
+
+                if(!AreJsonsEqual(lastResponse, newResponse))
+                {
+                    showMessagesByChannelId(newResponse);
+                    //getDataForRefreshing();
+
+                    lastResponse = newResponse;
+                }
+            }
+        }
+
+        // Метод для сравнения двух JSON строк
+        private bool AreJsonsEqual(string json1, string json2)
+        {
+            // Если обе строки null или пустые - считаем их одинаковыми
+            if (string.IsNullOrEmpty(json1) && string.IsNullOrEmpty(json2))
+                return true;
+                
+            // Если одна из строк null, а другая нет - они разные
+            if (json1 == null || json2 == null)
+                return false;
+                
+            try
+            {
+                // Парсим обе JSON строки в документы
+                // JsonDocument позволяет работать с JSON без создания классов
+                using var doc1 = JsonDocument.Parse(json1);
+                using var doc2 = JsonDocument.Parse(json2);
+                
+                // Сравниваем:
+                // JsonSerializer.Serialize() превращает обратно в строку, но уже в стандартном формате
+                // Это помогает избежать проблем с различиями в форматировании (пробелы, переносы)
+                // RootElement - это корневой элемент JSON документа
+                return JsonSerializer.Serialize(doc1.RootElement) == 
+                    JsonSerializer.Serialize(doc2.RootElement);
+            }
+            catch
+            {
+                // Если парсинг не удался - JSON невалидный, считаем что разные
+                return false;
+            }
+        }
+
+        /*
+            Метод, обновляющий список сообщений (по переданному роуту, для извлечения по нему данных)
+        */
+        private void showMessagesByChannelId(string refreshingData)
         {
             GroupName.Text = groupName;
 
+            //0. берем данные по переданному роуту для обновления списка сообщений на странице
+            //string refreshingData = Client.getData(urlForRefreshing);
+
             if(!IdChannel.Equals(""))
             {
-                // 0. формируем url для получения данных по нему от сервера
-                string url = "MessageController/getMessagesFromMyChannelAction<endl>" + IdChannel + "<endl>" + page + "<endl>100";
-
-                // 1. получаем данные в формате json-строки от сервера
-                string response = Client.getData(url);
+                Debug.WriteLine("()()()))(()()()) ->>> " + refreshingData);
 
                 // Парсим JSON в список словарей
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var data = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(response, options);
+                var data = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(refreshingData, options);
 
                 // Очищаем старые чаты перед добавлением новых
                 MessageContainer.Items.Clear();
@@ -139,12 +204,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                         CornerRadius = new CornerRadius(10),
                         Margin = new Thickness(0, 5, 0, 5),
                         Padding = new Thickness(15, 10),
-                         Child = child, //new TextBlock
-                        // {
-                        //     Text = $"|{item["identitycode"]} {item["surname"]} {item["name"]}| \n{item["description"]}\n\t{item["date"]}",
-                        //     TextWrapping = TextWrapping.Wrap,
-                        //     FontSize = 15
-                        // },
+                        Child = child,
                         HorizontalAlignment = horizontalAlignment
                     };
 
@@ -182,7 +242,8 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
                 string response = Client.getData(url);
 
-                showMessagesByChannelId();
+                //showMessagesByChannelId(urlForGetMessages());
+                getDataForRefreshing();
 
                 messageText.Text = "";
             } else if(!string.IsNullOrEmpty(base64Image))
@@ -191,7 +252,8 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
                 string response = Client.getData(url);
 
-                showMessagesByChannelId();
+                //showMessagesByChannelId(urlForGetMessages());
+                getDataForRefreshing();
 
                 base64Image = string.Empty;
                 messageText.Text = string.Empty;
@@ -212,7 +274,8 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
         {
             page = page + 1;
 
-            showMessagesByChannelId();
+            //showMessagesByChannelId(urlForGetMessages());
+            getDataForRefreshing();
         }
 
         public void Pag_Prev_Btn(object sender, RoutedEventArgs e)
@@ -221,7 +284,8 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             {
                 page = page - 1;
 
-                showMessagesByChannelId();
+                //showMessagesByChannelId(urlForGetMessages());
+                getDataForRefreshing();
             }
         }
 
@@ -258,19 +322,5 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                 }
             }
         }
-
-        // public TextBlock parseMessage(String text)
-        // {
-        //     string[] parsedData = text.Split("<img>");
-        //     TextBlock child = null;
-
-        //     if(parsedData.Length > 1)
-        //     {
-        //         TextBlock child = new TextBlock
-        //         {
-                    
-        //         };
-        //     }
-        // }
     }
 }
