@@ -44,7 +44,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             // таймер на обновление сообщений каждые пол минуты (Pooling)
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMinutes(0.5);
-            _timer.Tick += (s, e) => getDataForRefreshing(); //showMessagesByChannelId(urlForGetMessages());
+            _timer.Tick += (s, e) => getDataForRefreshing();
             _timer.Start();
         }
 
@@ -63,7 +63,6 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                 lastResponse = Client.getData(url);
 
                 showMessagesByChannelId(lastResponse);
-                //getDataForRefreshing();
             } else //иначе сравниваем строки ответов (предыдущего и нового), и если они неравные - обновляем данные сообщений исохраняем состояние последнего ответа
             {
                 string newResponse = Client.getData(url);
@@ -71,7 +70,6 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                 if(!AreJsonsEqual(lastResponse, newResponse))
                 {
                     showMessagesByChannelId(newResponse);
-                    //getDataForRefreshing();
 
                     lastResponse = newResponse;
                 }
@@ -117,13 +115,8 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
         {
             GroupName.Text = groupName;
 
-            //0. берем данные по переданному роуту для обновления списка сообщений на странице
-            //string refreshingData = Client.getData(urlForRefreshing);
-
             if(!IdChannel.Equals(""))
             {
-                Debug.WriteLine("()()()))(()()()) ->>> " + refreshingData);
-
                 // Парсим JSON в список словарей
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var data = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(refreshingData, options);
@@ -242,7 +235,6 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
                 string response = Client.getData(url);
 
-                //showMessagesByChannelId(urlForGetMessages());
                 getDataForRefreshing();
 
                 messageText.Text = "";
@@ -252,7 +244,6 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
                 string response = Client.getData(url);
 
-                //showMessagesByChannelId(urlForGetMessages());
                 getDataForRefreshing();
 
                 base64Image = string.Empty;
@@ -274,7 +265,6 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
         {
             page = page + 1;
 
-            //showMessagesByChannelId(urlForGetMessages());
             getDataForRefreshing();
         }
 
@@ -284,7 +274,6 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
             {
                 page = page - 1;
 
-                //showMessagesByChannelId(urlForGetMessages());
                 getDataForRefreshing();
             }
         }
