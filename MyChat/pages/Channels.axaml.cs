@@ -7,6 +7,7 @@ using System.Text.Json;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
+using MyChat.pages.Storage;
 
 
 namespace MyChat.pages
@@ -25,9 +26,9 @@ namespace MyChat.pages
             // загружаем список всех групп на первой странице слева
             getChannelsData("");
 
-            // таймер на обновление чатов каждые 5 мин (Pooling)
+            // таймер на обновление чатов каждую 1 мин (Pooling)
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMinutes(5);
+            _timer.Interval = TimeSpan.FromMinutes(1);
             _timer.Tick += (s, e) => getChannelsData(SearchField.Text);
             _timer.Start();
         }
@@ -73,6 +74,19 @@ namespace MyChat.pages
             //перебираем каждый элемент в json-ответе
             foreach (var item in data)
             {
+                // Получаем сырую строку из файла
+                string rawJson = JsonStorage.LoadJson();
+
+                var jsonGroups = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(rawJson);
+
+                var backgroundChannelButton = Avalonia.Media.Brushes.LightGray;
+                foreach (var storage in jsonGroups) {
+                    if(storage["channel_id"] == item["id"].ToString() && storage["last_message_id"] != item["last_message_id"].ToString())
+                    {
+                        backgroundChannelButton = Avalonia.Media.Brushes.LightGreen;
+                    }
+                }
+
                 // 1. Создаем кнопку вручную (и описываем каждой кнопке ее свойства в разметке)
                 var btn = new Button
                 {
@@ -82,7 +96,8 @@ namespace MyChat.pages
                     Margin = new Avalonia.Thickness(0, 2),
                     Height = 50,
                     HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
-                    VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center
+                    VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center,
+                    Background = backgroundChannelButton, // Установка цвета
                 };
 
                 // 2. Вешаем событие клика прямо здесь

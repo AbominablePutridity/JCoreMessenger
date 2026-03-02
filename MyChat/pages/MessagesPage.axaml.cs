@@ -16,6 +16,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using MyChat.pages;
+using MyChat.pages.Storage;
 
 
 namespace MyChat.pages // ДОБАВЬТЕ .pages
@@ -50,7 +51,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
 
         /*
             Метод, обновляющий данные сообщений на странице сообщений, только если
-            в новом ответе (обновляющемся каждые 5 минут), появилась новая запись
+            в новом ответе (обновляющемся каждые 1 минуту), появилась новая запись
             - тоесть, старый ответ не совпадает с новым
         */
         public void getDataForRefreshing()
@@ -124,6 +125,7 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                 // Очищаем старые чаты перед добавлением новых
                 MessageContainer.Items.Clear();
 
+                int i = 0;
                 foreach (var item in data)
                 {
                     //MessageContainer.Items.Add("|"+item["identitycode"] + " " + item["surname"] + " " + item["name"] + "| \n" + item["description"] + "\n" + "\t" + item["date"] + " ");
@@ -220,6 +222,13 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                             Client.messageContent.Content = new EditMessage(item["description"].ToString(), item["id"].ToString());
                         };
                     }
+
+                    if(i == data.Count() - 1) //если сообщение - последнее, подгрузилось
+                    {
+                        saveLastMessageId(IdChannel, item["id"].ToString()); //сохраняем его как просмотренное
+                    }
+
+                    i++;
                 }
 
                 if (MessageContainer.Items.Count - 1 > 0) {
@@ -309,6 +318,40 @@ namespace MyChat.pages // ДОБАВЬТЕ .pages
                     byte[] imageBytes = File.ReadAllBytes(filePath);
                     base64Image = Convert.ToBase64String(imageBytes);
                 }
+            }
+        }
+
+        public void saveLastMessageId(string channelId, string lastMessageId)
+        {
+            try 
+            {
+                // 1. Читаем то, что УЖЕ сохранено в файле
+                string rawJson = JsonStorage.LoadJson();
+                
+                // 2. Создаем список. Если файл пустой — новый, если нет — десериализуем старый
+                var allData = string.IsNullOrEmpty(rawJson) 
+                    ? new List<Dictionary<string, string>>() 
+                    : JsonSerializer.Deserialize<List<Dictionary<string, string>>>(rawJson) ?? new();
+
+                // 3. Чтобы не было дубликатов одного и того же канала, удаляем старую запись
+                allData.RemoveAll(x => x["channel_id"] == channelId);
+
+                // 4. Добавляем твой новый объект в этот список
+                allData.Add(new Dictionary<string, string> 
+                { 
+                    { "channel_id", channelId }, 
+                    { "last_message_id", lastMessageId } 
+                });
+
+                // 5. Превращаем ВЕСЬ ОБНОВЛЕННЫЙ СПИСОК в одну JSON-строку
+                string finalJson = JsonSerializer.Serialize(allData);
+
+                // 6. Сохраняем (ВАЖНО: в JsonStorage должен быть FileMode.Create, а не Append!)
+                JsonStorage.SaveJson(finalJson);
+            } 
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Ошибка: " + ex.Message);
             }
         }
     }
