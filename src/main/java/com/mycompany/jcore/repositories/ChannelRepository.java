@@ -34,7 +34,7 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         {
             query = 
                 """
-                SELECT channel.id, channel.name,
+                SELECT channel.id, channel.name, MAX(m.id) AS last_message_id,
                     CASE
                         WHEN channel.personid = ?
                         THEN true
@@ -42,8 +42,13 @@ public class ChannelRepository extends Repository<Channel, Channel> {
                     END AS is_own
                 FROM channel
                 INNER JOIN personchannel pc ON channel.id = pc.channelid
+                INNER JOIN message m ON m.personchannelid = pc.id
                 INNER JOIN person p ON pc.personid = p.id
                 WHERE p.id = ? AND channel.name LIKE ?
+                -- Группируем по всем полям, которые НЕ находятся внутри MAX()
+                GROUP BY channel.id, channel.name, channel.personid
+                -- А вот здесь уже сортируем по результату агрегации
+                ORDER BY last_message_id DESC
                 LIMIT ? OFFSET ?
                 """;
             
@@ -59,7 +64,7 @@ public class ChannelRepository extends Repository<Channel, Channel> {
         } else {
             query = 
                 """
-                SELECT channel.id, channel.name,
+                SELECT channel.id, channel.name, MAX(m.id) AS last_message_id,
                     CASE
                         WHEN channel.personid = ?
                         THEN true
@@ -67,8 +72,13 @@ public class ChannelRepository extends Repository<Channel, Channel> {
                     END AS is_own
                 FROM channel
                 INNER JOIN personchannel pc ON channel.id = pc.channelid
+                INNER JOIN message m ON m.personchannelid = pc.id
                 INNER JOIN person p ON pc.personid = p.id
                 WHERE p.id = ?
+                -- Группируем по всем полям, которые НЕ находятся внутри MAX()
+                GROUP BY channel.id, channel.name, channel.personid
+                -- А вот здесь уже сортируем по результату агрегации
+                ORDER BY last_message_id DESC
                 LIMIT ? OFFSET ?
                 """;
             
